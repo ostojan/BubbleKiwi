@@ -11,6 +11,8 @@ public class BubbleKiwiGame extends Game {
     public final static int WIDTH = 800;
     public final static int HEIGHT = 450;
 
+    private boolean paused;
+
 	SpriteBatch batch;
 	Texture img;
 	
@@ -34,4 +36,12 @@ public class BubbleKiwiGame extends Game {
 		batch.dispose();
 		img.dispose();
 	}
+
+    public boolean isPaused() {
+        return paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
 }
