@@ -2,13 +2,22 @@ package com.kiwi.bubblekiwi.screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Timer;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
 public class SplashScreen extends AbstractScreen {
     private Image splashImage;
 
-    public SplashScreen(BubbleKiwiGame game) {
+    public SplashScreen(final BubbleKiwiGame game) {
         super(game);
+
+        // TODO: Add game initialization instead of fixed delay
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                game.setScreen(new MenuScreen(game));
+            }
+        }, 1);
     }
 
     @Override
