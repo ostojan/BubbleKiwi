@@ -1,16 +1,17 @@
 package com.kiwi.bubblekiwi.entities;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
 public class ParallaxLayer extends Image {
     private Texture texture;
-    private Sprite sprite;
+    private TextureRegion textureRegion;
     private float speed;
     private float scrollTime;
+    private float step;
 
     public ParallaxLayer(Texture texture, float speed) {
         super();
@@ -21,15 +22,18 @@ public class ParallaxLayer extends Image {
     }
 
     private void initialize() {
+        float textureRatio = (float) texture.getWidth() / (float) texture.getHeight();
+        float backgroundRatio = (float) BubbleKiwiGame.WIDTH / (float) BubbleKiwiGame.HEIGHT;
+        step = backgroundRatio / textureRatio;
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        sprite = new Sprite(texture);
-        setDrawable(new SpriteDrawable(sprite));
+        textureRegion = new TextureRegion(texture, 0.0f, 0.0f, step, 1.0f);
+        setDrawable(new TextureRegionDrawable(textureRegion));
         setSize(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
     }
 
     public void update(float delta) {
         scrollTime += delta * speed;
-        sprite.setU(scrollTime);
-        sprite.setU2(scrollTime + 1);
+        textureRegion.setU(scrollTime);
+        textureRegion.setU2(scrollTime + step);
     }
 }
