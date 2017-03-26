@@ -1,5 +1,6 @@
 package com.kiwi.bubblekiwi.screens;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
@@ -15,6 +16,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     protected void initialize() {
+        backgroundColor = Color.BLACK;
         initializeButtonsStyle();
         initializeNewGameButton();
         initializeHighScoreButton();
