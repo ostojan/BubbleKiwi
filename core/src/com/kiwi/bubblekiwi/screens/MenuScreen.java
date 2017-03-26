@@ -2,7 +2,9 @@ package com.kiwi.bubblekiwi.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
 public class MenuScreen extends AbstractScreen {
@@ -33,6 +35,13 @@ public class MenuScreen extends AbstractScreen {
         newGameButton.setOrigin(75, 25);
         newGameButton.setPosition(BubbleKiwiGame.WIDTH / 2 - 160, BubbleKiwiGame.HEIGHT / 2 - 25);
         newGameButton.setDebug(true);
+        newGameButton.addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new GameplayScreen(game));
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
         stage.addActor(newGameButton);
     }
 
