@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class BubbleKiwiGame extends Game {
+    public final static String TITLE = "Bubble Kiwi";
+    public final static int WIDTH = 800;
+    public final static int HEIGHT = 450;
+
 	SpriteBatch batch;
 	Texture img;
 	
