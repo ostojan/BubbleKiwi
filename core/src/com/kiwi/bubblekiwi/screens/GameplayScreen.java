@@ -3,11 +3,13 @@ package com.kiwi.bubblekiwi.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.controllers.BubblesController;
 import com.kiwi.bubblekiwi.entities.ParallaxBackground;
 import com.kiwi.bubblekiwi.entities.ParallaxLayer;
 
 public class GameplayScreen extends AbstractScreen {
     private ParallaxBackground background;
+    private BubblesController bubblesController;
 
     public GameplayScreen(BubbleKiwiGame game) {
         super(game);
@@ -17,6 +19,7 @@ public class GameplayScreen extends AbstractScreen {
     protected void initialize() {
         backgroundColor = Color.BLACK;
         initializeBackground();
+        initializeBubblesController();
     }
 
     private void initializeBackground() {
@@ -24,6 +27,11 @@ public class GameplayScreen extends AbstractScreen {
         ParallaxLayer ground = new ParallaxLayer(new Texture("ground.png"), 0.0f);
         background = new ParallaxBackground(new ParallaxLayer[]{clouds, ground});
         stage.addActor(background);
+    }
+
+    private void initializeBubblesController() {
+        bubblesController = new BubblesController();
+        stage.addActor(bubblesController);
     }
 
     @Override
@@ -39,5 +47,6 @@ public class GameplayScreen extends AbstractScreen {
 
     private void update(float delta) {
         background.update(delta);
+        bubblesController.update(delta);
     }
 }
