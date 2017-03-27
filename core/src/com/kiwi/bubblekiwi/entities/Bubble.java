@@ -5,10 +5,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.controllers.BubblesController;
 
 public class Bubble extends Image {
     private int endY;
     private float fallSpeed;
+    private BubblesController bubblesController;
 
     public void update(float delta) {
         float moveDistance = delta * fallSpeed;
@@ -16,6 +18,12 @@ public class Bubble extends Image {
         if (getY() <= endY) {
             remove();
         }
+    }
+
+    @Override
+    public boolean remove() {
+        bubblesController.removeBubble(this);
+        return super.remove();
     }
 
     public static class Builder {
@@ -47,6 +55,11 @@ public class Bubble extends Image {
 
         public Builder fallSpeed(float speed) {
             bubble.fallSpeed = speed;
+            return this;
+        }
+
+        public Builder bubblesController(BubblesController controller) {
+            bubble.bubblesController = controller;
             return this;
         }
 
