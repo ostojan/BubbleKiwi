@@ -7,9 +7,9 @@ import com.kiwi.bubblekiwi.BubbleKiwiGame;
 public class Player extends Image {
     private static final int WIDTH = 120;
     private static final int HEIGHT = 157;
-    private static final float MOVE_SPEED = 250.0f;
-    private static final float JUMP_SPEED = 500.0f;
-    private static final float FALL_SPEED = 520.0f;
+    private static final float MOVE_SPEED = 250.0f / BubbleKiwiGame.PPM;
+    private static final float JUMP_SPEED = 500.0f / BubbleKiwiGame.PPM;
+    private static final float FALL_SPEED = 520.0f / BubbleKiwiGame.PPM;
 
     private enum State {
         STAYING,
@@ -22,9 +22,9 @@ public class Player extends Image {
 
     public Player() {
         super(new Texture("kiwi.png"));
-        setSize(WIDTH, HEIGHT);
-        setOrigin(WIDTH / 2.0f, HEIGHT / 2.0f);
-        setPosition((BubbleKiwiGame.WIDTH - WIDTH) / 2.0f, 20);
+        setSize(WIDTH / BubbleKiwiGame.PPM, HEIGHT / BubbleKiwiGame.PPM);
+        setOrigin((WIDTH / 2.0f) / BubbleKiwiGame.PPM, (HEIGHT / 2.0f) / BubbleKiwiGame.PPM);
+        setPosition(((BubbleKiwiGame.WIDTH - WIDTH) / 2.0f) / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
         state = State.STAYING;
     }
 
@@ -59,26 +59,26 @@ public class Player extends Image {
     public void update(float delta) {
         switch (state) {
             case MOVING_LEFT:
-                if (getX() > 0) {
+                if (getX() > 0.0f) {
                     moveBy(-delta * MOVE_SPEED, 0);
                 }
                 break;
             case MOVING_RIGHT:
-                if (getX() < BubbleKiwiGame.WIDTH - WIDTH) {
-                    moveBy(delta * MOVE_SPEED, 0);
+                if (getX() < (BubbleKiwiGame.WIDTH - WIDTH) / BubbleKiwiGame.PPM) {
+                    moveBy(delta * MOVE_SPEED, 0.0f);
                 }
                 break;
             case FALLING:
-                if (getY() <= 20) {
+                if (getY() <= 20.0f / BubbleKiwiGame.PPM) {
                     state = State.STAYING;
                 }
-                moveBy(0, -delta * FALL_SPEED);
+                moveBy(0.0f, -delta * FALL_SPEED);
                 break;
             case JUMPING:
-                if (getY() >= 180) {
+                if (getY() >= 180.0f / BubbleKiwiGame.PPM) {
                     state = State.FALLING;
                 }
-                moveBy(0, delta * JUMP_SPEED);
+                moveBy(0.0f, delta * JUMP_SPEED);
                 break;
         }
     }

@@ -19,18 +19,34 @@ public abstract class AbstractScreen implements Screen {
     private OrthographicCamera camera;
 
     public AbstractScreen(BubbleKiwiGame game) {
+        this(game, false);
+    }
+
+    public AbstractScreen(BubbleKiwiGame game, boolean realWorldCamera) {
         this.game = game;
-        createCamera();
-        stage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, camera));
+        createCamera(realWorldCamera);
+        createStage(realWorldCamera);
         spriteBatch = new SpriteBatch();
         Gdx.input.setInputProcessor(stage);
         initialize();
     }
 
-    private void createCamera() {
+    private void createCamera(boolean realWorldCamera) {
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
+        if (realWorldCamera) {
+            camera.setToOrtho(false, BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM);
+        } else {
+            camera.setToOrtho(false, BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
+        }
         camera.update();
+    }
+
+    private void createStage(boolean realWorldCamera) {
+        if (realWorldCamera) {
+            stage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM, camera));
+        } else {
+            stage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, camera));
+        }
     }
 
     protected abstract void initialize();

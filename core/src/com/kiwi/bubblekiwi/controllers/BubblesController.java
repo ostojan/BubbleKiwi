@@ -38,13 +38,13 @@ public class BubblesController extends Actor {
     }
 
     private void createNewBubble() {
-        int size = MathUtils.random(50, 100);
+        float size = MathUtils.random(50.0f, 100.0f);
         float fallSpeed = MathUtils.random(20.0f, 35.0f);
         Bubble bubble = new Bubble.Builder()
                 .texture(getRandomBubbleTexture())
                 .size(size)
-                .startX(MathUtils.random(0, BubbleKiwiGame.WIDTH - size))
-                .endY(20) // TODO: End Y position should be defined outside controller
+                .startX(MathUtils.random(0.0f, BubbleKiwiGame.WIDTH - size))
+                .endY(20.0f) // TODO: End Y position should be defined outside controller
                 .fallSpeed(fallSpeed)
                 .bubblesController(this)
                 .build();

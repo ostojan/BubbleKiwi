@@ -8,14 +8,14 @@ import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.BubblesController;
 
 public class Bubble extends Image {
-    private int endY;
+    private float endY;
     private float fallSpeed;
     private BubblesController bubblesController;
 
     public void update(float delta) {
         float moveDistance = delta * fallSpeed;
         moveBy(0, -moveDistance);
-        if (getY() <= endY) {
+        if (getY() <= endY / BubbleKiwiGame.PPM) {
             remove();
         }
     }
@@ -39,22 +39,22 @@ public class Bubble extends Image {
         }
 
         public Builder size(float size) {
-            bubble.setSize(size, size);
+            bubble.setSize(size / BubbleKiwiGame.PPM, size / BubbleKiwiGame.PPM);
             return this;
         }
 
-        public Builder startX(int startX) {
-            bubble.setPosition(startX, BubbleKiwiGame.HEIGHT);
+        public Builder startX(float startX) {
+            bubble.setPosition(startX / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM);
             return this;
         }
 
-        public Builder endY(int endY) {
+        public Builder endY(float endY) {
             bubble.endY = endY;
             return this;
         }
 
         public Builder fallSpeed(float speed) {
-            bubble.fallSpeed = speed;
+            bubble.fallSpeed = speed / BubbleKiwiGame.PPM;
             return this;
         }
 

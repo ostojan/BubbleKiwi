@@ -30,7 +30,7 @@ public class SplashScreen extends AbstractScreen {
     private void createSplashImage() {
         splashImage = new Image(new Texture("badlogic.jpg"));
         splashImage.setSize(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
-        splashImage.setPosition(0, 0);
+        splashImage.setPosition(0.0f, 0.0f);
         stage.addActor(splashImage);
     }
 

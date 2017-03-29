@@ -5,8 +5,9 @@ import com.kiwi.bubblekiwi.screens.SplashScreen;
 
 public class BubbleKiwiGame extends Game {
     public final static String TITLE = "Bubble Kiwi";
-    public final static int WIDTH = 800;
-    public final static int HEIGHT = 450;
+    public final static float WIDTH = 800.0f;
+    public final static float HEIGHT = 450.0f;
+    public final static float PPM = 200.0f;
 
     private boolean paused;
 

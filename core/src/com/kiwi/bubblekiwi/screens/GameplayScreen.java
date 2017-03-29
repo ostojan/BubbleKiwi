@@ -20,7 +20,7 @@ public class GameplayScreen extends AbstractScreen {
     private Button jumpButton;
 
     public GameplayScreen(BubbleKiwiGame game) {
-        super(game);
+        super(game, true);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initializeLeftControlButton() {
         leftButton = new Button(new Button.ButtonStyle());
-        leftButton.setSize(120, 120);
-        leftButton.setPosition(20, 20);
+        leftButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
+        leftButton.setPosition(20.0f / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
         leftButton.setDebug(true);
         leftButton.addListener(new ClickListener() {
             @Override
@@ -72,8 +72,8 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initializeRightControlButton() {
         rightButton = new Button(new Button.ButtonStyle());
-        rightButton.setSize(120, 120);
-        rightButton.setPosition(160, 20);
+        rightButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
+        rightButton.setPosition(160.0f / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
         rightButton.setDebug(true);
         rightButton.addListener(new ClickListener() {
             @Override
@@ -87,8 +87,8 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initializeJumpControlButton() {
         jumpButton = new Button(new Button.ButtonStyle());
-        jumpButton.setSize(120, 120);
-        jumpButton.setPosition(BubbleKiwiGame.WIDTH - 140, 20);
+        jumpButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
+        jumpButton.setPosition((BubbleKiwiGame.WIDTH - 140.0f) / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
         jumpButton.setDebug(true);
         stage.addActor(jumpButton);
     }

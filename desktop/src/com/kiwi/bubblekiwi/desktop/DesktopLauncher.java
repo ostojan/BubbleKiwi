@@ -8,8 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = BubbleKiwiGame.TITLE;
-		config.width = BubbleKiwiGame.WIDTH;
-		config.height = BubbleKiwiGame.HEIGHT;
+		config.width = (int) BubbleKiwiGame.WIDTH;
+		config.height = (int) BubbleKiwiGame.HEIGHT;
 		config.resizable = false;
 		new LwjglApplication(new BubbleKiwiGame(), config);
 	}

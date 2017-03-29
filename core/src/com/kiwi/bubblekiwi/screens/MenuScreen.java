@@ -31,9 +31,9 @@ public class MenuScreen extends AbstractScreen {
 
     private void initializeNewGameButton() {
         newGameButton = new TextButton("Start game", buttonStyle);
-        newGameButton.setSize(150, 50);
-        newGameButton.setOrigin(75, 25);
-        newGameButton.setPosition(BubbleKiwiGame.WIDTH / 2 - 160, BubbleKiwiGame.HEIGHT / 2 - 25);
+        newGameButton.setSize(150.0f, 50.0f);
+        newGameButton.setOrigin(75.0f, 25.0f);
+        newGameButton.setPosition(BubbleKiwiGame.WIDTH / 2.0f - 160.0f, BubbleKiwiGame.HEIGHT / 2.0f - 25.0f);
         newGameButton.setDebug(true);
         newGameButton.addListener(new ClickListener() {
             @Override
@@ -49,9 +49,9 @@ public class MenuScreen extends AbstractScreen {
         TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
         style.font = new BitmapFont();
         highScoreButton = new TextButton("High score", style);
-        highScoreButton.setSize(150, 50);
-        highScoreButton.setOrigin(75, 25);
-        highScoreButton.setPosition(BubbleKiwiGame.WIDTH / 2 + 10, BubbleKiwiGame.HEIGHT / 2 - 25);
+        highScoreButton.setSize(150.0f, 50.0f);
+        highScoreButton.setOrigin(75.0f, 25.0f);
+        highScoreButton.setPosition(BubbleKiwiGame.WIDTH / 2.0f + 10.0f, BubbleKiwiGame.HEIGHT / 2.0f - 25.0f);
         highScoreButton.setDebug(true);
         stage.addActor(highScoreButton);
     }
