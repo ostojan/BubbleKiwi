@@ -4,20 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.BubblesController;
-import com.kiwi.bubblekiwi.entities.GameplayBoundary;
-import com.kiwi.bubblekiwi.entities.ParallaxBackground;
-import com.kiwi.bubblekiwi.entities.ParallaxLayer;
-import com.kiwi.bubblekiwi.entities.Player;
+import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
+import com.kiwi.bubblekiwi.entities.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class GameplayScreen extends AbstractScreen {
     private ParallaxBackground background;
@@ -28,7 +22,7 @@ public class GameplayScreen extends AbstractScreen {
     private Button jumpButton;
     private World world;
     private Box2DDebugRenderer debugRenderer;
-    private List<GameplayBoundary> boundaries;
+    private HashMap<GameplayBoundary.GameplayBoundaryTypes, GameplayBoundary> boundaries;
 
     public GameplayScreen(BubbleKiwiGame game) {
         super(game, true);
@@ -43,6 +37,9 @@ public class GameplayScreen extends AbstractScreen {
         initializePlayer();
         initializeBubblesController();
         initializePlayerControlButtons();
+        world.setContactListener(new GameplayContactListener(player,
+                bubblesController,
+                boundaries.get(GameplayBoundary.GameplayBoundaryTypes.DOWN)));
         debugRenderer = new Box2DDebugRenderer();
     }
 
@@ -58,10 +55,13 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeBoundaries() {
-        boundaries = new ArrayList<GameplayBoundary>();
-        boundaries.add(new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.LEFT));
-        boundaries.add(new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.RIGHT));
-        boundaries.add(new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.DOWN));
+        boundaries = new HashMap<GameplayBoundary.GameplayBoundaryTypes, GameplayBoundary>();
+        boundaries.put(GameplayBoundary.GameplayBoundaryTypes.LEFT,
+                new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.LEFT));
+        boundaries.put(GameplayBoundary.GameplayBoundaryTypes.RIGHT,
+                new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.RIGHT));
+        boundaries.put(GameplayBoundary.GameplayBoundaryTypes.DOWN,
+                new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.DOWN));
     }
 
     private void initializePlayer() {
