@@ -65,7 +65,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializePlayer() {
-        player = new Player();
+        player = new Player(world);
         stage.addActor(player);
     }
 
@@ -85,13 +85,6 @@ public class GameplayScreen extends AbstractScreen {
         leftButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
         leftButton.setPosition(20.0f / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
         leftButton.setDebug(true);
-        leftButton.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                player.stopMoving();
-            }
-        });
         stage.addActor(leftButton);
     }
 
@@ -100,13 +93,6 @@ public class GameplayScreen extends AbstractScreen {
         rightButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
         rightButton.setPosition(160.0f / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
         rightButton.setDebug(true);
-        rightButton.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-                player.stopMoving();
-            }
-        });
         stage.addActor(rightButton);
     }
 

@@ -1,85 +1,85 @@
 package com.kiwi.bubblekiwi.entities;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
 public class Player extends Image {
-    private static final int WIDTH = 120;
-    private static final int HEIGHT = 157;
-    private static final float MOVE_SPEED = 250.0f / BubbleKiwiGame.PPM;
-    private static final float JUMP_SPEED = 500.0f / BubbleKiwiGame.PPM;
-    private static final float FALL_SPEED = 520.0f / BubbleKiwiGame.PPM;
+    private static final float WIDTH = 120;
+    private static final float HALF_WIDTH = WIDTH / 2.0f;
+    private static final float HEIGHT = 157;
+    private static final float HALF_HEIGHT = HEIGHT / 2.0f;
 
-    private enum State {
-        STAYING,
-        MOVING_LEFT,
-        MOVING_RIGHT,
-        JUMPING,
-        FALLING
-        }
-    private State state;
+    private World world;
+    private Body body;
+    private boolean isInAir;
+    private boolean isMovingLeft;
+    private boolean isMovingRight;
 
-    public Player() {
+    public Player(World world) {
         super(new Texture("kiwi.png"));
+        this.world = world;
         setSize(WIDTH / BubbleKiwiGame.PPM, HEIGHT / BubbleKiwiGame.PPM);
-        setOrigin((WIDTH / 2.0f) / BubbleKiwiGame.PPM, (HEIGHT / 2.0f) / BubbleKiwiGame.PPM);
-        setPosition(((BubbleKiwiGame.WIDTH - WIDTH) / 2.0f) / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
-        state = State.STAYING;
+        setOrigin(HALF_WIDTH / BubbleKiwiGame.PPM, HALF_HEIGHT  / BubbleKiwiGame.PPM);
+        initializeBody();
+    }
+
+    private void initializeBody() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set((BubbleKiwiGame.WIDTH / 2.0f) / BubbleKiwiGame.PPM, (HALF_HEIGHT + 25.0f) / BubbleKiwiGame.PPM);
+        body = world.createBody(bodyDef);
+
+        initializeBodyFixture();
+    }
+
+    private void initializeBodyFixture() {
+        PolygonShape shape = (PolygonShape) createShape();
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+
+        body.createFixture(fixtureDef);
+        shape.dispose();
+    }
+
+    private Shape createShape() {
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(HALF_WIDTH / BubbleKiwiGame.PPM, HALF_HEIGHT / BubbleKiwiGame.PPM);
+        return shape;
     }
 
     public void moveRight() {
-        if (state == State.STAYING) {
-            state = State.MOVING_RIGHT;
+        if (!isMovingLeft) {
+            isMovingRight = true;
         }
     }
 
     public void moveLeft() {
-        if (state == State.STAYING) {
-            state = State.MOVING_LEFT;
+        if (!isMovingRight) {
+            isMovingLeft = true;
         }
     }
 
     public void jump() {
-        if (state == State.STAYING) {
-            state = State.JUMPING;
+        if (!isInAir) {
+            body.applyForceToCenter(0.0f, 100.0f, true);
+            isInAir = true;
         }
-    }
-
-    public void stopMoving() {
-        if (!isInAir()) {
-            state = State.STAYING;
-        }
-    }
-
-    private boolean isInAir() {
-        return state == State.FALLING || state == State.JUMPING;
     }
 
     public void update(float delta) {
-        switch (state) {
-            case MOVING_LEFT:
-                if (getX() > 0.0f) {
-                    moveBy(-delta * MOVE_SPEED, 0);
-                }
-                break;
-            case MOVING_RIGHT:
-                if (getX() < (BubbleKiwiGame.WIDTH - WIDTH) / BubbleKiwiGame.PPM) {
-                    moveBy(delta * MOVE_SPEED, 0.0f);
-                }
-                break;
-            case FALLING:
-                if (getY() <= 20.0f / BubbleKiwiGame.PPM) {
-                    state = State.STAYING;
-                }
-                moveBy(0.0f, -delta * FALL_SPEED);
-                break;
-            case JUMPING:
-                if (getY() >= 180.0f / BubbleKiwiGame.PPM) {
-                    state = State.FALLING;
-                }
-                moveBy(0.0f, delta * JUMP_SPEED);
-                break;
+        setPosition(body.getPosition().x - HALF_WIDTH  / BubbleKiwiGame.PPM, body.getPosition().y - HALF_HEIGHT  / BubbleKiwiGame.PPM);
+        body.setLinearVelocity(0.0f, body.getLinearVelocity().y);
+        if (isMovingLeft) {
+            body.setLinearVelocity(-2.5f, body.getLinearVelocity().y);
+            isMovingLeft = false;
+        }
+        if (isMovingRight) {
+            body.setLinearVelocity(2.5f, body.getLinearVelocity().y);
+            isMovingRight = false;
         }
     }
 }
