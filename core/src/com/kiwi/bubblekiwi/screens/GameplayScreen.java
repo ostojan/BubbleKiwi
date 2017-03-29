@@ -48,9 +48,18 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeBackground() {
-        ParallaxLayer clouds = new ParallaxLayer(new Texture("clouds.png"), 0.01f);
+        ParallaxLayer farClouds = new ParallaxLayer(new Texture("far_clouds.png"), 0.004f);
+        ParallaxLayer mountains = new ParallaxLayer(new Texture("mountains.png"), 0.0f);
+        ParallaxLayer nearClouds = new ParallaxLayer(new Texture("near_clouds.png"), 0.01f);
+        ParallaxLayer fog = new ParallaxLayer(new Texture("fog.png"), -0.0025f);
         ParallaxLayer ground = new ParallaxLayer(new Texture("ground.png"), 0.0f);
-        background = new ParallaxBackground(new ParallaxLayer[]{clouds, ground});
+        background = new ParallaxBackground(new ParallaxLayer[]{
+                farClouds,
+                mountains,
+                nearClouds,
+                fog,
+                ground
+        });
         stage.addActor(background);
     }
 
