@@ -2,6 +2,10 @@ package com.kiwi.bubblekiwi.screens;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -18,6 +22,8 @@ public class GameplayScreen extends AbstractScreen {
     private Button leftButton;
     private Button rightButton;
     private Button jumpButton;
+    private World world;
+    private Box2DDebugRenderer debugRenderer;
 
     public GameplayScreen(BubbleKiwiGame game) {
         super(game, true);
@@ -26,10 +32,16 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     protected void initialize() {
         backgroundColor = Color.BLACK;
+        initializeWorld();
         initializeBackground();
         initializePlayer();
         initializeBubblesController();
         initializePlayerControlButtons();
+        debugRenderer = new Box2DDebugRenderer();
+    }
+
+    private void initializeWorld() {
+        world = new World(new Vector2(0, -10.0f), true);
     }
 
     private void initializeBackground() {
@@ -97,11 +109,14 @@ public class GameplayScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
 
-        update(delta);
+        world.step(delta, 6, 2);
 
+        update(delta);
+        Matrix4 projectionMatrix = spriteBatch.getProjectionMatrix().cpy();
         spriteBatch.begin();
         stage.draw();
         spriteBatch.end();
+        debugRenderer.render(world, projectionMatrix);
     }
 
     private void update(float delta) {
