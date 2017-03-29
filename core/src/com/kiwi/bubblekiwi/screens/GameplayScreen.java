@@ -11,9 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.BubblesController;
+import com.kiwi.bubblekiwi.entities.GameplayBoundary;
 import com.kiwi.bubblekiwi.entities.ParallaxBackground;
 import com.kiwi.bubblekiwi.entities.ParallaxLayer;
 import com.kiwi.bubblekiwi.entities.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameplayScreen extends AbstractScreen {
     private ParallaxBackground background;
@@ -24,6 +28,7 @@ public class GameplayScreen extends AbstractScreen {
     private Button jumpButton;
     private World world;
     private Box2DDebugRenderer debugRenderer;
+    private List<GameplayBoundary> boundaries;
 
     public GameplayScreen(BubbleKiwiGame game) {
         super(game, true);
@@ -34,6 +39,7 @@ public class GameplayScreen extends AbstractScreen {
         backgroundColor = Color.BLACK;
         initializeWorld();
         initializeBackground();
+        initializeBoundaries();
         initializePlayer();
         initializeBubblesController();
         initializePlayerControlButtons();
@@ -49,6 +55,13 @@ public class GameplayScreen extends AbstractScreen {
         ParallaxLayer ground = new ParallaxLayer(new Texture("ground.png"), 0.0f);
         background = new ParallaxBackground(new ParallaxLayer[]{clouds, ground});
         stage.addActor(background);
+    }
+
+    private void initializeBoundaries() {
+        boundaries = new ArrayList<GameplayBoundary>();
+        boundaries.add(new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.LEFT));
+        boundaries.add(new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.RIGHT));
+        boundaries.add(new GameplayBoundary(world, GameplayBoundary.GameplayBoundaryTypes.DOWN));
     }
 
     private void initializePlayer() {
