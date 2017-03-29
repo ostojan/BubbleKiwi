@@ -77,6 +77,7 @@ public class BubblesController extends Actor {
 
     private void removeUnusedBubbles() {
         for (Bubble bubble : bubblesToRemove) {
+            bubble.dispose();
             bubbles.remove(bubble);
         }
         bubblesToRemove.clear();
@@ -91,5 +92,9 @@ public class BubblesController extends Actor {
 
     public void removeBubble(Bubble bubble) {
         bubblesToRemove.add(bubble);
+    }
+
+    public List<Bubble> getBubbles() {
+        return bubbles;
     }
 }

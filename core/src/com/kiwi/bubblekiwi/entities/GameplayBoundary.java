@@ -74,4 +74,8 @@ public class GameplayBoundary {
         shape.setAsBox(type.getHalfSizes().x, type.getHalfSizes().y);
         return shape;
     }
+
+    public Body getBody() {
+        return body;
+    }
 }

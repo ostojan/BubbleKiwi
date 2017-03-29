@@ -29,6 +29,7 @@ public class Player extends Image {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set((BubbleKiwiGame.WIDTH / 2.0f) / BubbleKiwiGame.PPM, (HALF_HEIGHT + 25.0f) / BubbleKiwiGame.PPM);
+        bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
         initializeBodyFixture();
@@ -81,5 +82,17 @@ public class Player extends Image {
             body.setLinearVelocity(2.5f, body.getLinearVelocity().y);
             isMovingRight = false;
         }
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public boolean isInAir() {
+        return isInAir;
+    }
+
+    public void setInAir(boolean inAir) {
+        isInAir = inAir;
     }
 }

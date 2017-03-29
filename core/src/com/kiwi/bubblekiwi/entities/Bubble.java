@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Disposable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.BubblesController;
 
-public class Bubble extends Image {
+public class Bubble extends Image implements Disposable {
     private BubblesController bubblesController;
     private World world;
     private Body body;
@@ -58,6 +59,15 @@ public class Bubble extends Image {
     public boolean remove() {
         bubblesController.removeBubble(this);
         return super.remove();
+    }
+
+    @Override
+    public void dispose() {
+        world.destroyBody(body);
+    }
+
+    public Body getBody() {
+        return body;
     }
 
     public static class Builder {
