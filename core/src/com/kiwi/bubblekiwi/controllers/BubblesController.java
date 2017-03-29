@@ -3,6 +3,7 @@ package com.kiwi.bubblekiwi.controllers;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Timer;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
@@ -15,8 +16,10 @@ public class BubblesController extends Actor {
     private List<Bubble> bubbles;
     private List<Bubble> bubblesToRemove;
     private int spawnTime;
+    private World world;
 
-    public BubblesController() {
+    public BubblesController(World world) {
+        this.world = world;
         initialize();
     }
 
@@ -38,14 +41,12 @@ public class BubblesController extends Actor {
     }
 
     private void createNewBubble() {
-        float size = MathUtils.random(50.0f, 100.0f);
-        float fallSpeed = MathUtils.random(20.0f, 35.0f);
+        float radius = MathUtils.random(25.0f, 50.0f);
         Bubble bubble = new Bubble.Builder()
                 .texture(getRandomBubbleTexture())
-                .size(size)
-                .startX(MathUtils.random(0.0f, BubbleKiwiGame.WIDTH - size))
-                .endY(20.0f) // TODO: End Y position should be defined outside controller
-                .fallSpeed(fallSpeed)
+                .radius(radius)
+                .startX(MathUtils.random(radius, BubbleKiwiGame.WIDTH - radius))
+                .world(world)
                 .bubblesController(this)
                 .build();
         bubbles.add(bubble);

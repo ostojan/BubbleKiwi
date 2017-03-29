@@ -57,7 +57,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeBubblesController() {
-        bubblesController = new BubblesController();
+        bubblesController = new BubblesController(world);
         stage.addActor(bubblesController);
     }
 
