@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.BubblesController;
@@ -14,6 +13,7 @@ import com.kiwi.bubblekiwi.entities.GameplayBoundary;
 import com.kiwi.bubblekiwi.entities.ParallaxBackground;
 import com.kiwi.bubblekiwi.entities.ParallaxLayer;
 import com.kiwi.bubblekiwi.entities.Player;
+import com.kiwi.bubblekiwi.ui.MoveButton;
 
 import java.util.HashMap;
 
@@ -21,9 +21,9 @@ public class GameplayScreen extends AbstractScreen {
     private ParallaxBackground background;
     private Player player;
     private BubblesController bubblesController;
-    private Button leftButton;
-    private Button rightButton;
-    private Button jumpButton;
+    private MoveButton leftButton;
+    private MoveButton rightButton;
+    private MoveButton jumpButton;
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private HashMap<GameplayBoundary.GameplayBoundaryTypes, GameplayBoundary> boundaries;
@@ -98,26 +98,17 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeLeftControlButton() {
-        leftButton = new Button(new Button.ButtonStyle());
-        leftButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
-        leftButton.setPosition(20.0f / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
-        leftButton.setDebug(true);
+        leftButton = new MoveButton(MoveButton.MoveButtonTypes.LEFT, assets);
         stage.addActor(leftButton);
     }
 
     private void initializeRightControlButton() {
-        rightButton = new Button(new Button.ButtonStyle());
-        rightButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
-        rightButton.setPosition(160.0f / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
-        rightButton.setDebug(true);
+        rightButton = new MoveButton(MoveButton.MoveButtonTypes.RIGHT, assets);
         stage.addActor(rightButton);
     }
 
     private void initializeJumpControlButton() {
-        jumpButton = new Button(new Button.ButtonStyle());
-        jumpButton.setSize(120.0f / BubbleKiwiGame.PPM, 120.0f / BubbleKiwiGame.PPM);
-        jumpButton.setPosition((BubbleKiwiGame.WIDTH - 140.0f) / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM);
-        jumpButton.setDebug(true);
+        jumpButton = new MoveButton(MoveButton.MoveButtonTypes.JUMP, assets);
         stage.addActor(jumpButton);
     }
 
@@ -129,6 +120,7 @@ public class GameplayScreen extends AbstractScreen {
 
         update(delta);
         Matrix4 projectionMatrix = spriteBatch.getProjectionMatrix().cpy();
+        spriteBatch.enableBlending();
         spriteBatch.begin();
         stage.draw();
         spriteBatch.end();
