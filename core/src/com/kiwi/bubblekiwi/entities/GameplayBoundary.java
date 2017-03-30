@@ -8,7 +8,7 @@ public class GameplayBoundary {
     public enum GameplayBoundaryTypes {
         DOWN(new Vector2((BubbleKiwiGame.WIDTH / 2.0f) / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM),
                 new Vector2((BubbleKiwiGame.WIDTH / 2.0f) / BubbleKiwiGame.PPM, 0.0f),
-                0.2f),
+                0.8f),
         LEFT(new Vector2(0.0f, (BubbleKiwiGame.HEIGHT / 2.0f) / BubbleKiwiGame.PPM),
                 new Vector2(0.0f, (BubbleKiwiGame.HEIGHT / 2.0f) / BubbleKiwiGame.PPM),
                 0.0f),

@@ -1,5 +1,6 @@
 package com.kiwi.bubblekiwi.entities;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
@@ -10,6 +11,11 @@ public class Player extends Image {
     private static final float HALF_WIDTH = WIDTH / 2.0f;
     private static final float HEIGHT = 157;
     private static final float HALF_HEIGHT = HEIGHT / 2.0f;
+    private static final float MOVE_IMPULSE_VALUE = 0.05f;
+    private static final Vector2 MOVE_LEFT_IMPULSE = new Vector2(-MOVE_IMPULSE_VALUE, 0.0f);
+    private static final Vector2 MOVE_RIGHT_IMPULSE = new Vector2(MOVE_IMPULSE_VALUE, 0.0f);
+    private static final float JUMP_IMPULSE_VALUE = 1.8f;
+    private static final Vector2 JUMP_IMPULSE = new Vector2(0.0f, JUMP_IMPULSE_VALUE);
 
     private World world;
     private Assets assets;
@@ -55,35 +61,27 @@ public class Player extends Image {
     }
 
     public void moveRight() {
-        if (!isMovingLeft) {
-            isMovingRight = true;
+        if (!isInAir) {
+            body.applyLinearImpulse(MOVE_RIGHT_IMPULSE, body.getWorldCenter(), true);
         }
     }
 
     public void moveLeft() {
-        if (!isMovingRight) {
-            isMovingLeft = true;
+        if (!isInAir) {
+            body.applyLinearImpulse(MOVE_LEFT_IMPULSE, body.getWorldCenter(), true);
         }
     }
 
     public void jump() {
         if (!isInAir) {
-            body.applyForceToCenter(0.0f, 100.0f, true);
+            body.applyLinearImpulse(JUMP_IMPULSE, body.getWorldCenter(), true);
+
             isInAir = true;
         }
     }
 
     public void update(float delta) {
         setPosition(body.getPosition().x - HALF_WIDTH / BubbleKiwiGame.PPM, body.getPosition().y - HALF_HEIGHT / BubbleKiwiGame.PPM);
-        body.setLinearVelocity(0.0f, body.getLinearVelocity().y);
-        if (isMovingLeft) {
-            body.setLinearVelocity(-2.5f, body.getLinearVelocity().y);
-            isMovingLeft = false;
-        }
-        if (isMovingRight) {
-            body.setLinearVelocity(2.5f, body.getLinearVelocity().y);
-            isMovingRight = false;
-        }
     }
 
     public Body getBody() {
