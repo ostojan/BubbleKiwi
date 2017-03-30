@@ -1,0 +1,40 @@
+
+bubbles.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bubble1
+  rotate: false
+  xy: 1, 494
+  size: 509, 491
+  orig: 509, 491
+  offset: 0, 0
+  index: -1
+bubble2
+  rotate: false
+  xy: 1, 1
+  size: 509, 491
+  orig: 509, 491
+  offset: 0, 0
+  index: -1
+bubble3
+  rotate: false
+  xy: 512, 494
+  size: 509, 491
+  orig: 509, 491
+  offset: 0, 0
+  index: -1
+bubble4
+  rotate: false
+  xy: 512, 1
+  size: 509, 491
+  orig: 509, 491
+  offset: 0, 0
+  index: -1
+bubble5
+  rotate: false
+  xy: 1023, 494
+  size: 509, 491
+  orig: 509, 491
+  offset: 0, 0
+  index: -1

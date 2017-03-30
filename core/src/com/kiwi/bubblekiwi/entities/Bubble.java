@@ -1,6 +1,5 @@
 package com.kiwi.bubblekiwi.entities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -13,12 +12,12 @@ public class Bubble extends Image implements Disposable {
     private BubblesController bubblesController;
     private World world;
     private Body body;
-    private Texture texture;
+    private TextureRegion textureRegion;
     private float radius;
     private float startX;
 
     private void initialize() {
-        setDrawable(new TextureRegionDrawable(new TextureRegion(texture)));
+        setDrawable(new TextureRegionDrawable(textureRegion));
         setSize((radius * 2.0f) / BubbleKiwiGame.PPM, (radius * 2.0f) / BubbleKiwiGame.PPM);
         initializeBody();
 
@@ -78,8 +77,8 @@ public class Bubble extends Image implements Disposable {
             bubble = new Bubble();
         }
 
-        public Builder texture(Texture texture) {
-            bubble.texture = texture;
+        public Builder textureRegion(TextureRegion region) {
+            bubble.textureRegion = region;
             return this;
         }
 
@@ -97,6 +96,7 @@ public class Bubble extends Image implements Disposable {
             bubble.world = world;
             return this;
         }
+
         public Builder bubblesController(BubblesController controller) {
             bubble.bubblesController = controller;
             return this;

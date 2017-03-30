@@ -1,15 +1,19 @@
 package com.kiwi.bubblekiwi.screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.BubblesController;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
-import com.kiwi.bubblekiwi.entities.*;
+import com.kiwi.bubblekiwi.entities.GameplayBoundary;
+import com.kiwi.bubblekiwi.entities.ParallaxBackground;
+import com.kiwi.bubblekiwi.entities.ParallaxLayer;
+import com.kiwi.bubblekiwi.entities.Player;
 
 import java.util.HashMap;
 
@@ -24,13 +28,14 @@ public class GameplayScreen extends AbstractScreen {
     private Box2DDebugRenderer debugRenderer;
     private HashMap<GameplayBoundary.GameplayBoundaryTypes, GameplayBoundary> boundaries;
 
-    public GameplayScreen(BubbleKiwiGame game) {
-        super(game, true);
+    public GameplayScreen(BubbleKiwiGame game, Assets assets) {
+        super(game, assets, true);
     }
 
     @Override
     protected void initialize() {
         backgroundColor = Color.BLACK;
+        initializeAssets();
         initializeWorld();
         initializeBackground();
         initializeBoundaries();
@@ -43,16 +48,20 @@ public class GameplayScreen extends AbstractScreen {
         debugRenderer = new Box2DDebugRenderer();
     }
 
+    private void initializeAssets() {
+        assets.loadGameplayScreen();
+    }
+
     private void initializeWorld() {
         world = new World(new Vector2(0, -10.0f), true);
     }
 
     private void initializeBackground() {
-        ParallaxLayer farClouds = new ParallaxLayer(new Texture("far_clouds.png"), 0.004f);
-        ParallaxLayer mountains = new ParallaxLayer(new Texture("mountains.png"), 0.0f);
-        ParallaxLayer nearClouds = new ParallaxLayer(new Texture("near_clouds.png"), 0.01f);
-        ParallaxLayer fog = new ParallaxLayer(new Texture("fog.png"), -0.0025f);
-        ParallaxLayer ground = new ParallaxLayer(new Texture("ground.png"), 0.0f);
+        ParallaxLayer farClouds = new ParallaxLayer(assets.get(Assets.farClouds), 0.004f);
+        ParallaxLayer mountains = new ParallaxLayer(assets.get(Assets.mountains), 0.0f);
+        ParallaxLayer nearClouds = new ParallaxLayer(assets.get(Assets.nearClouds), 0.01f);
+        ParallaxLayer fog = new ParallaxLayer(assets.get(Assets.fog), -0.0025f);
+        ParallaxLayer ground = new ParallaxLayer(assets.get(Assets.ground), 0.0f);
         background = new ParallaxBackground(new ParallaxLayer[]{
                 farClouds,
                 mountains,
@@ -74,12 +83,12 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializePlayer() {
-        player = new Player(world);
+        player = new Player(world, assets);
         stage.addActor(player);
     }
 
     private void initializeBubblesController() {
-        bubblesController = new BubblesController(world);
+        bubblesController = new BubblesController(world, assets);
         stage.addActor(bubblesController);
     }
 

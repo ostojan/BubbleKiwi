@@ -6,14 +6,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.controllers.Assets;
 
 public class MenuScreen extends AbstractScreen {
     private TextButton newGameButton;
     private TextButton highScoreButton;
     private TextButton.TextButtonStyle buttonStyle;
 
-    public MenuScreen(BubbleKiwiGame game) {
-        super(game);
+    public MenuScreen(BubbleKiwiGame game, Assets assets) {
+        super(game, assets);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class MenuScreen extends AbstractScreen {
         newGameButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new GameplayScreen(game));
+                game.setScreen(new GameplayScreen(game, assets));
                 return super.touchDown(event, x, y, pointer, button);
             }
         });

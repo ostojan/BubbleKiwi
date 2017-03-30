@@ -9,21 +9,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.controllers.Assets;
 
 public abstract class AbstractScreen implements Screen {
     protected BubbleKiwiGame game;
     protected Stage stage;
     protected SpriteBatch spriteBatch;
     protected Color backgroundColor;
+    protected Assets assets;
 
     private OrthographicCamera camera;
 
-    public AbstractScreen(BubbleKiwiGame game) {
-        this(game, false);
+    public AbstractScreen(BubbleKiwiGame game, Assets assets) {
+        this(game, assets, false);
     }
 
-    public AbstractScreen(BubbleKiwiGame game, boolean realWorldCamera) {
+    public AbstractScreen(BubbleKiwiGame game, Assets assets, boolean realWorldCamera) {
         this.game = game;
+        this.assets = assets;
         createCamera(realWorldCamera);
         createStage(realWorldCamera);
         spriteBatch = new SpriteBatch();

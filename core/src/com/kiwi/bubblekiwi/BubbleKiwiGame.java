@@ -1,6 +1,7 @@
 package com.kiwi.bubblekiwi;
 
 import com.badlogic.gdx.Game;
+import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.screens.SplashScreen;
 
 public class BubbleKiwiGame extends Game {
@@ -10,11 +11,19 @@ public class BubbleKiwiGame extends Game {
     public final static float PPM = 200.0f;
 
     private boolean paused;
+    private Assets assets;
 
-	@Override
-	public void create () {
-		setScreen(new SplashScreen(this));
-	}
+    @Override
+    public void create() {
+        assets = new Assets();
+        setScreen(new SplashScreen(this, assets));
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        assets.dispose();
+    }
 
     public boolean isPaused() {
         return paused;

@@ -1,7 +1,7 @@
 package com.kiwi.bubblekiwi.controllers;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -17,9 +17,11 @@ public class BubblesController extends Actor {
     private List<Bubble> bubblesToRemove;
     private int spawnTime;
     private World world;
+    private Assets assets;
 
-    public BubblesController(World world) {
+    public BubblesController(World world, Assets assets) {
         this.world = world;
+        this.assets = assets;
         initialize();
     }
 
@@ -43,7 +45,7 @@ public class BubblesController extends Actor {
     private void createNewBubble() {
         float radius = MathUtils.random(25.0f, 50.0f);
         Bubble bubble = new Bubble.Builder()
-                .texture(getRandomBubbleTexture())
+                .textureRegion(getRandomBubbleTextureRegion())
                 .radius(radius)
                 .startX(MathUtils.random(radius, BubbleKiwiGame.WIDTH - radius))
                 .world(world)
@@ -52,11 +54,9 @@ public class BubblesController extends Actor {
         bubbles.add(bubble);
     }
 
-    private Texture getRandomBubbleTexture() {
-        // TODO: Create and use resources manager
-        int textureId = MathUtils.random(1, 5);
-        String textureName = String.format("bubble%d.png", textureId);
-        return new Texture(textureName);
+    private TextureRegion getRandomBubbleTextureRegion() {
+        String regionName = String.format("bubble%d", MathUtils.random(1, 5));
+        return assets.get(Assets.bubbles).findRegion(regionName);
     }
 
     private void randomizeSpawnTime() {

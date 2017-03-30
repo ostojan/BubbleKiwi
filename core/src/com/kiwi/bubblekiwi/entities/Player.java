@@ -1,9 +1,9 @@
 package com.kiwi.bubblekiwi.entities;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.controllers.Assets;
 
 public class Player extends Image {
     private static final float WIDTH = 120;
@@ -12,16 +12,18 @@ public class Player extends Image {
     private static final float HALF_HEIGHT = HEIGHT / 2.0f;
 
     private World world;
+    private Assets assets;
     private Body body;
     private boolean isInAir;
     private boolean isMovingLeft;
     private boolean isMovingRight;
 
-    public Player(World world) {
-        super(new Texture("kiwi.png"));
+    public Player(World world, Assets assets) {
+        super(assets.get(Assets.player));
         this.world = world;
+        this.assets = assets;
         setSize(WIDTH / BubbleKiwiGame.PPM, HEIGHT / BubbleKiwiGame.PPM);
-        setOrigin(HALF_WIDTH / BubbleKiwiGame.PPM, HALF_HEIGHT  / BubbleKiwiGame.PPM);
+        setOrigin(HALF_WIDTH / BubbleKiwiGame.PPM, HALF_HEIGHT / BubbleKiwiGame.PPM);
         initializeBody();
     }
 
@@ -72,7 +74,7 @@ public class Player extends Image {
     }
 
     public void update(float delta) {
-        setPosition(body.getPosition().x - HALF_WIDTH  / BubbleKiwiGame.PPM, body.getPosition().y - HALF_HEIGHT  / BubbleKiwiGame.PPM);
+        setPosition(body.getPosition().x - HALF_WIDTH / BubbleKiwiGame.PPM, body.getPosition().y - HALF_HEIGHT / BubbleKiwiGame.PPM);
         body.setLinearVelocity(0.0f, body.getLinearVelocity().y);
         if (isMovingLeft) {
             body.setLinearVelocity(-2.5f, body.getLinearVelocity().y);
