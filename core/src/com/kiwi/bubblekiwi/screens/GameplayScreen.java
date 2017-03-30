@@ -43,7 +43,6 @@ public class GameplayScreen extends AbstractScreen {
         initializeBubblesController();
         initializePlayerControlButtons();
         world.setContactListener(new GameplayContactListener(player,
-                bubblesController,
                 boundaries.get(GameplayBoundary.GameplayBoundaryTypes.DOWN)));
         debugRenderer = new Box2DDebugRenderer();
     }

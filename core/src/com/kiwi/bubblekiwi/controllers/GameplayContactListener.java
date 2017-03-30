@@ -7,15 +7,11 @@ import com.kiwi.bubblekiwi.entities.Player;
 
 public class GameplayContactListener implements ContactListener {
     private Player player;
-    private Body playerBody;
-    private Body groundBody;
-    private BubblesController bubblesController;
+    private GameplayBoundary ground;
 
-    public GameplayContactListener(Player player, BubblesController bubblesController, GameplayBoundary groundBoundary) {
+    public GameplayContactListener(Player player, GameplayBoundary groundBoundary) {
         this.player = player;
-        playerBody = player.getBody();
-        this.bubblesController = bubblesController;
-        groundBody = groundBoundary.getBody();
+        this.ground = groundBoundary;
     }
 
     @Override
@@ -50,45 +46,38 @@ public class GameplayContactListener implements ContactListener {
     }
 
     private boolean playerTouchedGround(Body first, Body second) {
-        return ((first == playerBody) && (second == groundBody)) || ((first == groundBody) && (second == playerBody));
+        return ((first.getUserData() == player) && (second.getUserData() == ground)) ||
+                ((first.getUserData() == ground) && (second.getUserData() == player));
     }
 
     private boolean bubbleTouchedGround(Body first, Body second) {
-        return ((first == groundBody) && (second != playerBody)) || ((first != playerBody) && (second == groundBody));
+        return ((first.getUserData() == ground) && (second.getUserData() != player)) ||
+                ((first.getUserData() != player) && (second.getUserData() == ground));
     }
 
     private boolean playerTouchedBubble(Body first, Body second) {
-        return ((first == playerBody) && (second != groundBody)) || ((first != groundBody) && (second == playerBody));
+        return ((first.getUserData() == player) && (second.getUserData() != ground)) ||
+                ((first.getUserData() != ground) && (second.getUserData() == player));
     }
 
     private Bubble findBubbleThatTouchedGround(Body first, Body second) {
-        Body possibleBubbleBody = findPossibleBubbleBodyWithKnownBody(first, second, groundBody);
-        return findBubbleWithBody(possibleBubbleBody);
+        return findBubbleThatTouchedObject(first, second, ground);
     }
 
     private Bubble findBubbleThatTouchedPlayer(Body first, Body second) {
-        Body possibleBubbleBody = findPossibleBubbleBodyWithKnownBody(first, second, playerBody);
-        return findBubbleWithBody(possibleBubbleBody);
+        return findBubbleThatTouchedObject(first, second, player);
     }
 
-    private Body findPossibleBubbleBodyWithKnownBody(Body first, Body second, Body knownBody) {
-        if (first == knownBody) {
-            return second;
-        }
-        if (second == knownBody) {
-            return first;
-        }
-        return null;
-    }
-
-    private Bubble findBubbleWithBody(Body possibleBubbleBody) {
-        if (possibleBubbleBody == null) {
-            return null;
-        }
-        for (Bubble bubble : bubblesController.getBubbles()) {
-            if (possibleBubbleBody == bubble.getBody()) {
-                return bubble;
+    private Bubble findBubbleThatTouchedObject(Body first, Body second, Object userDataObject) {
+        try {
+            if (first.getUserData() == userDataObject) {
+                return (Bubble) second.getUserData();
             }
+            if (second.getUserData() == userDataObject) {
+                return (Bubble) first.getUserData();
+            }
+        } catch (ClassCastException e) {
+            return null;
         }
         return null;
     }

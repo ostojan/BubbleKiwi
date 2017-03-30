@@ -29,6 +29,7 @@ public class Bubble extends Image implements Disposable {
         bodyDef.position.set(startX / BubbleKiwiGame.PPM, (BubbleKiwiGame.HEIGHT + radius) / BubbleKiwiGame.PPM);
         body = world.createBody(bodyDef);
         body.setGravityScale(0.01f);
+        body.setUserData(this);
 
         initializeBodyFixture();
     }

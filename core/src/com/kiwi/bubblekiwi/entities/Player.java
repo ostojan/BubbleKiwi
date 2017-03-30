@@ -39,6 +39,7 @@ public class Player extends Image {
         bodyDef.position.set((BubbleKiwiGame.WIDTH / 2.0f) / BubbleKiwiGame.PPM, (HALF_HEIGHT + 25.0f) / BubbleKiwiGame.PPM);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
+        body.setUserData(this);
 
         initializeBodyFixture();
     }

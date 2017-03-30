@@ -54,7 +54,7 @@ public class GameplayBoundary {
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(type.getPosition());
         body = world.createBody(bodyDef);
-
+        body.setUserData(this);
         initializeBodyFixture();
     }
 
