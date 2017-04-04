@@ -14,7 +14,6 @@ import com.kiwi.bubblekiwi.controllers.Assets;
 public abstract class AbstractScreen implements Screen {
     protected BubbleKiwiGame game;
     protected Stage stage;
-    protected SpriteBatch spriteBatch;
     protected Color backgroundColor;
     protected Assets assets;
 
@@ -29,7 +28,6 @@ public abstract class AbstractScreen implements Screen {
         this.assets = assets;
         createCamera(realWorldCamera);
         createStage(realWorldCamera);
-        spriteBatch = new SpriteBatch();
         Gdx.input.setInputProcessor(stage);
         initialize();
     }
@@ -62,7 +60,6 @@ public abstract class AbstractScreen implements Screen {
     public void render(float delta) {
         clearScreen();
         camera.update();
-        spriteBatch.setProjectionMatrix(camera.combined);
     }
 
     private void clearScreen() {

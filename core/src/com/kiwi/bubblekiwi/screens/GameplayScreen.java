@@ -119,11 +119,8 @@ public class GameplayScreen extends AbstractScreen {
         world.step(delta, 6, 2);
 
         update(delta);
-        Matrix4 projectionMatrix = spriteBatch.getProjectionMatrix().cpy();
-        spriteBatch.enableBlending();
-        spriteBatch.begin();
+        Matrix4 projectionMatrix = stage.getCamera().combined.cpy();
         stage.draw();
-        spriteBatch.end();
         debugRenderer.render(world, projectionMatrix);
     }
 
