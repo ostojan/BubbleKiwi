@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
-import com.kiwi.bubblekiwi.controllers.BubblesController;
 
 public class Bubble extends Image implements Disposable {
     private BubblesController bubblesController;
@@ -51,7 +50,9 @@ public class Bubble extends Image implements Disposable {
         return shape;
     }
 
-    public void update(float delta) {
+    @Override
+    public void act(float delta) {
+        super.act(delta);
         setPosition(body.getPosition().x - radius / BubbleKiwiGame.PPM, body.getPosition().y - radius / BubbleKiwiGame.PPM);
     }
 

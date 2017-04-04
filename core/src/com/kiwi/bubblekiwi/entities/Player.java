@@ -81,7 +81,9 @@ public class Player extends Image {
         }
     }
 
-    public void update(float delta) {
+    @Override
+    public void act(float delta) {
+        super.act(delta);
         setPosition(body.getPosition().x - HALF_WIDTH / BubbleKiwiGame.PPM, body.getPosition().y - HALF_HEIGHT / BubbleKiwiGame.PPM);
     }
 

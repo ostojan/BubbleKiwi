@@ -31,7 +31,9 @@ public class ParallaxLayer extends Image {
         setSize(BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM);
     }
 
-    public void update(float delta) {
+    @Override
+    public void act(float delta) {
+        super.act(delta);
         scrollTime += delta * speed;
         textureRegion.setU(scrollTime);
         textureRegion.setU2(scrollTime + step);

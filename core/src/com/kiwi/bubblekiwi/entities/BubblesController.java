@@ -1,4 +1,4 @@
-package com.kiwi.bubblekiwi.controllers;
+package com.kiwi.bubblekiwi.entities;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Timer;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
-import com.kiwi.bubblekiwi.entities.Bubble;
+import com.kiwi.bubblekiwi.controllers.Assets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,14 +64,16 @@ public class BubblesController extends Actor {
     }
 
 
-    public void update(float delta) {
-        updateBubbles(delta);
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        actBubbles(delta);
         removeUnusedBubbles();
     }
 
-    private void updateBubbles(float delta) {
+    private void actBubbles(float delta) {
         for (Bubble bubble : bubbles) {
-            bubble.update(delta);
+            bubble.act(delta);
         }
     }
 

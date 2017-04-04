@@ -10,9 +10,11 @@ public class ParallaxBackground extends Actor {
         this.layers = layers;
     }
 
-    public void update(float delta) {
+    @Override
+    public void act(float delta) {
+        super.act(delta);
         for (ParallaxLayer layer : layers) {
-            layer.update(delta);
+            layer.act(delta);
         }
     }
 

@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
-import com.kiwi.bubblekiwi.controllers.BubblesController;
+import com.kiwi.bubblekiwi.entities.BubblesController;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.entities.GameplayBoundary;
 import com.kiwi.bubblekiwi.entities.ParallaxBackground;
@@ -128,7 +128,6 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void update(float delta) {
-        background.update(delta);
         if (leftButton.isPressed()) {
             player.moveLeft();
         }
@@ -138,7 +137,6 @@ public class GameplayScreen extends AbstractScreen {
         if (jumpButton.isPressed()) {
             player.jump();
         }
-        player.update(delta);
-        bubblesController.update(delta);
+        stage.act(delta);
     }
 }
