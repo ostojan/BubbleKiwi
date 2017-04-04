@@ -1,6 +1,8 @@
 package com.kiwi.bubblekiwi.entities;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
@@ -45,7 +47,8 @@ public class BubblesController extends Actor {
     private void createNewBubble() {
         float radius = MathUtils.random(25.0f, 50.0f);
         Bubble bubble = new Bubble.Builder()
-                .textureRegion(getRandomBubbleTextureRegion())
+                .animation(Bubble.BubbleState.FALLING, createBubbleFallAnimation())
+                .animation(Bubble.BubbleState.DYING, createBubbleDeathAnimation())
                 .radius(radius)
                 .startX(MathUtils.random(radius, BubbleKiwiGame.WIDTH - radius))
                 .world(world)
@@ -54,9 +57,18 @@ public class BubblesController extends Actor {
         bubbles.add(bubble);
     }
 
+    private Animation<TextureRegion> createBubbleFallAnimation() {
+        return new Animation<TextureRegion>(1.0f / 4.0f, getRandomBubbleTextureRegion());
+    }
+
     private TextureRegion getRandomBubbleTextureRegion() {
         String regionName = String.format("bubble%d", MathUtils.random(1, 5));
         return assets.get(Assets.bubbles).findRegion(regionName);
+    }
+
+    private Animation<TextureRegion> createBubbleDeathAnimation() {
+        //TODO: Add death animation
+        return createBubbleFallAnimation();
     }
 
     private void randomizeSpawnTime() {

@@ -23,12 +23,12 @@ public class GameplayContactListener implements ContactListener {
         } else if (bubbleTouchedGround(firstContactBody, secondContactBody)) {
             Bubble bubble = findBubbleThatTouchedGround(firstContactBody, secondContactBody);
             if (bubble != null) {
-                bubble.remove();
+                bubble.destroy();
             }
         } else if (playerTouchedBubble(firstContactBody, secondContactBody)) {
             Bubble bubble = findBubbleThatTouchedPlayer(firstContactBody, secondContactBody);
             if (bubble != null && player.isInAir()) {
-                bubble.remove();
+                bubble.destroy();
             }
         }
     }
