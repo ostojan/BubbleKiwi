@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
-public class ParallaxLayer extends Image {
+public class ParallaxLayer extends WorldImage {
     private Texture texture;
     private TextureRegion textureRegion;
     private float speed;
@@ -28,7 +28,7 @@ public class ParallaxLayer extends Image {
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         textureRegion = new TextureRegion(texture, 0.0f, 0.0f, step, 1.0f);
         setDrawable(new TextureRegionDrawable(textureRegion));
-        setSize(BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM);
+        setSize(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
     }
 
     @Override
