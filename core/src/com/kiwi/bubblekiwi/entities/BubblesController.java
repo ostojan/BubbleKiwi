@@ -2,7 +2,6 @@ package com.kiwi.bubblekiwi.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
@@ -45,13 +44,10 @@ public class BubblesController extends Actor {
     }
 
     private void createNewBubble() {
-        float radius = MathUtils.random(25.0f, 50.0f);
         Bubble bubble = new Bubble.Builder()
-                .animation(Bubble.BubbleState.FALLING, createBubbleFallAnimation())
-                .animation(Bubble.BubbleState.DYING, createBubbleDeathAnimation())
-                .radius(radius)
-                .startX(MathUtils.random(radius, BubbleKiwiGame.WIDTH - radius))
                 .world(world)
+                .addAnimationForState(Bubble.BubbleState.FALLING, createBubbleFallAnimation())
+                .addAnimationForState(Bubble.BubbleState.DYING, createBubbleDeathAnimation())
                 .bubblesController(this)
                 .build();
         bubbles.add(bubble);

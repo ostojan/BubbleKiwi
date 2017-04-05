@@ -2,55 +2,61 @@ package com.kiwi.bubblekiwi.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
 import java.util.HashMap;
 
-public class Bubble extends AnimatedActor<Bubble.BubbleState> implements Disposable {
+public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubble.BubbleState, Animation<TextureRegion>>> implements Disposable {
     public enum BubbleState {
         FALLING,
         DYING
     }
     private BubblesController bubblesController;
     private World world;
-    private Body body;
     private float radius;
     private float startX;
 
-    public Bubble() {
-        initializeAnimations();
+    private Bubble(World world,
+                  HashMap<BubbleState, Animation<TextureRegion>> animations,
+                  BubblesController bubblesController) {
+        super(world, BubbleState.FALLING, animations);
+        this.bubblesController = bubblesController;
+
     }
 
-    private void initialize() {
-        setState(BubbleState.FALLING);
-        setDrawable(new TextureRegionDrawable(currentAnimation.getKeyFrame(stateTime)));
-        setSize((radius * 2.0f) / BubbleKiwiGame.PPM, (radius * 2.0f) / BubbleKiwiGame.PPM);
-        initializeBody();
+    @Override
+    protected void initializeBody() {
+        randomizeStartXAndRadius();
+        super.initializeBody();
+        getActorBody().setGravityScale(0.01f);
     }
 
-    private void initializeBody() {
+    private void randomizeStartXAndRadius() {
+        radius = MathUtils.random(25.0f, 50.0f);
+        startX = MathUtils.random(radius, BubbleKiwiGame.WIDTH - radius);
+    }
+
+    @Override
+    protected BodyDef createBodyDef() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(startX / BubbleKiwiGame.PPM, (BubbleKiwiGame.HEIGHT + radius) / BubbleKiwiGame.PPM);
-        body = world.createBody(bodyDef);
-        body.setGravityScale(0.01f);
-        body.setUserData(this);
-
-        initializeBodyFixture();
+        bodyDef.position.set(
+                startX / BubbleKiwiGame.PPM,
+                (BubbleKiwiGame.HEIGHT + radius) / BubbleKiwiGame.PPM
+        );
+        return bodyDef;
     }
 
-    private void initializeBodyFixture() {
+    @Override
+    protected FixtureDef createFixtureDef() {
         CircleShape shape = (CircleShape) createShape();
-
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0.0001f;
-
-        body.createFixture(fixtureDef);
-        shape.dispose();
+        return fixtureDef;
     }
 
     private Shape createShape() {
@@ -59,21 +65,29 @@ public class Bubble extends AnimatedActor<Bubble.BubbleState> implements Disposa
         return shape;
     }
 
+
     @Override
-    protected void initializeAnimations() {
-        animations = new HashMap<BubbleState, Animation<TextureRegion>>();
+    protected void initialize() {
+        setSize((radius * 2.0f), (radius * 2.0f));
+        setOrigin(radius, radius);
+    }
+
+
+    @Override
+    protected void initializeAnimations(HashMap<BubbleState, Animation<TextureRegion>> animations) {
+        this.animations = animations;
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-        switch (state) {
+        switch (getActorState()) {
             case FALLING:
-                setPosition(body.getPosition().x - radius / BubbleKiwiGame.PPM, body.getPosition().y - radius / BubbleKiwiGame.PPM);
+                updatePosition();
                 break;
             case DYING:
-                body.setActive(false);
-                if (currentAnimation.isAnimationFinished(stateTime)) {
+                getActorBody().setActive(false);
+                if (currentAnimation.isAnimationFinished(getStateTime())) {
                     remove();
                 }
                 break;
@@ -81,7 +95,7 @@ public class Bubble extends AnimatedActor<Bubble.BubbleState> implements Disposa
     }
 
     public void destroy() {
-        setState(BubbleState.DYING);
+        setActorState(BubbleState.DYING);
     }
 
     @Override
@@ -90,51 +104,32 @@ public class Bubble extends AnimatedActor<Bubble.BubbleState> implements Disposa
         return super.remove();
     }
 
-    @Override
-    public void dispose() {
-        world.destroyBody(body);
-    }
-
-    public Body getBody() {
-        return body;
-    }
-
     public static class Builder {
-
-        private Bubble bubble;
+        private World world;
+        private HashMap<BubbleState, Animation<TextureRegion>> animations;
+        private BubblesController bubblesController;
 
         public Builder() {
-            bubble = new Bubble();
-        }
-
-        public Builder animation(BubbleState state, Animation<TextureRegion> animation) {
-            bubble.animations.put(state, animation);
-            return this;
-        }
-
-        public Builder radius(float radius) {
-            bubble.radius = radius;
-            return this;
-        }
-
-        public Builder startX(float startX) {
-            bubble.startX = startX;
-            return this;
+            animations = new HashMap<BubbleState, Animation<TextureRegion>>();
         }
 
         public Builder world(World world) {
-            bubble.world = world;
+            this.world = world;
+            return this;
+        }
+
+        public Builder addAnimationForState(BubbleState state, Animation<TextureRegion> animation) {
+            this.animations.put(state, animation);
             return this;
         }
 
         public Builder bubblesController(BubblesController controller) {
-            bubble.bubblesController = controller;
+            bubblesController = controller;
             return this;
         }
 
         public Bubble build() {
-            bubble.initialize();
-            return bubble;
+            return new Bubble(world, animations, bubblesController);
         }
 
     }
