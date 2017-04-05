@@ -16,6 +16,8 @@ public class Assets implements Disposable {
 
     public static final AssetDescriptor<Texture> farClouds =
             new AssetDescriptor<Texture>("backgrounds/far_clouds.png", Texture.class);
+    public static final AssetDescriptor<Texture> middleClouds =
+            new AssetDescriptor<Texture>("backgrounds/middle_clouds.png", Texture.class);
     public static final AssetDescriptor<Texture> mountains =
             new AssetDescriptor<Texture>("backgrounds/mountains.png", Texture.class);
     public static final AssetDescriptor<Texture> nearClouds =
@@ -52,6 +54,7 @@ public class Assets implements Disposable {
 
     public void loadGameplayScreen() {
         manager.load(farClouds);
+        manager.load(middleClouds);
         manager.load(mountains);
         manager.load(nearClouds);
         manager.load(fog);

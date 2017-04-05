@@ -56,13 +56,15 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeBackground() {
-        ParallaxLayer farClouds = new ParallaxLayer(assets.get(Assets.farClouds), 0.004f);
+        ParallaxLayer farClouds = new ParallaxLayer(assets.get(Assets.farClouds), 0.002f);
+        ParallaxLayer middleClouds = new ParallaxLayer(assets.get(Assets.middleClouds), 0.004f);
         ParallaxLayer mountains = new ParallaxLayer(assets.get(Assets.mountains), 0.0f);
         ParallaxLayer nearClouds = new ParallaxLayer(assets.get(Assets.nearClouds), 0.01f);
         ParallaxLayer fog = new ParallaxLayer(assets.get(Assets.fog), -0.0025f);
         ParallaxLayer ground = new ParallaxLayer(assets.get(Assets.ground), 0.0f);
         background = new ParallaxBackground(new ParallaxLayer[]{
                 farClouds,
+                middleClouds,
                 mountains,
                 nearClouds,
                 fog,
