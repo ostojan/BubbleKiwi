@@ -1,0 +1,40 @@
+
+bubble_death.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1
+  rotate: false
+  xy: 1, 1
+  size: 171, 165
+  orig: 171, 165
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 174, 1
+  size: 171, 165
+  orig: 171, 165
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 347, 1
+  size: 171, 165
+  orig: 171, 165
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 520, 1
+  size: 171, 165
+  orig: 171, 165
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 693, 1
+  size: 171, 165
+  orig: 171, 165
+  offset: 0, 0
+  index: -1

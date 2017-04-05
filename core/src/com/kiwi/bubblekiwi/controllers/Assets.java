@@ -29,6 +29,8 @@ public class Assets implements Disposable {
             new AssetDescriptor<Texture>("sprites/kiwi.png", Texture.class);
     public static final AssetDescriptor<TextureAtlas> bubbles =
             new AssetDescriptor<TextureAtlas>("sprites/bubbles.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<TextureAtlas> bubbleDeath =
+            new AssetDescriptor<TextureAtlas>("sprites/bubble_death.atlas", TextureAtlas.class);
 
     public static AssetDescriptor<Texture> arrow =
             new AssetDescriptor<Texture>("ui/arrow.png", Texture.class);
@@ -56,6 +58,7 @@ public class Assets implements Disposable {
         manager.load(ground);
         manager.load(player);
         manager.load(bubbles);
+        manager.load(bubbleDeath);
         manager.load(arrow);
         manager.finishLoading();
     }

@@ -2,10 +2,12 @@ package com.kiwi.bubblekiwi.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
@@ -63,8 +65,8 @@ public class BubblesController extends Actor {
     }
 
     private Animation<TextureRegion> createBubbleDeathAnimation() {
-        //TODO: Add death animation
-        return createBubbleFallAnimation();
+        Array<TextureAtlas.AtlasRegion> regions = assets.get(Assets.bubbleDeath).getRegions();
+        return new Animation<TextureRegion>(1.0f / 15.0f, regions);
     }
 
     private void randomizeSpawnTime() {
