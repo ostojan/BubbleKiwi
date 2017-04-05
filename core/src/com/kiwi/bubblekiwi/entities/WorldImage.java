@@ -3,7 +3,7 @@ package com.kiwi.bubblekiwi.entities;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
-public class WorldImage extends Image {
+public abstract class WorldImage extends Image {
     @Override
     public void setOrigin(float originX, float originY) {
         super.setOrigin(originX / BubbleKiwiGame.PPM, originY / BubbleKiwiGame.PPM);
