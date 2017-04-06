@@ -5,45 +5,11 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
 public class GameplayBoundary {
-    public enum GameplayBoundaryTypes {
-        DOWN(new Vector2((BubbleKiwiGame.WIDTH / 2.0f) / BubbleKiwiGame.PPM, 20.0f / BubbleKiwiGame.PPM),
-                new Vector2((BubbleKiwiGame.WIDTH / 2.0f) / BubbleKiwiGame.PPM, 0.0f),
-                0.8f),
-        LEFT(new Vector2(0.0f, (BubbleKiwiGame.HEIGHT / 2.0f) / BubbleKiwiGame.PPM),
-                new Vector2(0.0f, (BubbleKiwiGame.HEIGHT / 2.0f) / BubbleKiwiGame.PPM),
-                0.0f),
-        RIGHT(new Vector2(BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, (BubbleKiwiGame.HEIGHT / 2.0f) / BubbleKiwiGame.PPM),
-                new Vector2(0.0f, (BubbleKiwiGame.HEIGHT / 2.0f) / BubbleKiwiGame.PPM),
-                0.0f);
-
-        private Vector2 position;
-        private Vector2 halfSizes;
-        private final float friction;
-
-        GameplayBoundaryTypes(Vector2 position, Vector2 halfSizes, float friction) {
-            this.position = position;
-            this.halfSizes = halfSizes;
-            this.friction = friction;
-        }
-
-        public Vector2 getPosition() {
-            return position;
-        }
-
-        public Vector2 getHalfSizes() {
-            return halfSizes;
-        }
-
-        public float getFriction() {
-            return friction;
-        }
-    }
-
     private World world;
-    private GameplayBoundaryTypes type;
+    private GameplayBoundaryType type;
     private Body body;
 
-    public GameplayBoundary(World world, GameplayBoundaryTypes type) {
+    public GameplayBoundary(World world, GameplayBoundaryType type) {
         this.world = world;
         this.type = type;
         initializeBody();
@@ -63,7 +29,7 @@ public class GameplayBoundary {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.friction = type.friction;
+        fixtureDef.friction = type.getFriction();
 
         body.createFixture(fixtureDef);
         shape.dispose();
