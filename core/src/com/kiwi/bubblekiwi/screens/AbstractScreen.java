@@ -29,6 +29,7 @@ public abstract class AbstractScreen implements Screen {
         createStage(realWorldCamera);
         Gdx.input.setInputProcessor(stage);
         initialize();
+        Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g,  backgroundColor.b, backgroundColor.a);
     }
 
     private void createCamera(boolean realWorldCamera) {
@@ -62,7 +63,6 @@ public abstract class AbstractScreen implements Screen {
     }
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g,  backgroundColor.b, backgroundColor.a);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
