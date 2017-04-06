@@ -75,6 +75,8 @@ public class GameplayScreen extends AbstractScreen {
                 new GameplayBoundary(world, GameplayBoundaryType.LEFT));
         boundaries.put(GameplayBoundaryType.RIGHT,
                 new GameplayBoundary(world, GameplayBoundaryType.RIGHT));
+        boundaries.put(GameplayBoundaryType.UP,
+                new GameplayBoundary(world, GameplayBoundaryType.UP));
         boundaries.put(GameplayBoundaryType.DOWN,
                 new GameplayBoundary(world, GameplayBoundaryType.DOWN));
     }
