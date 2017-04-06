@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
-import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 
 import java.util.ArrayList;
@@ -104,9 +103,5 @@ public class BubblesController extends Actor {
 
     public void removeBubble(Bubble bubble) {
         bubblesToRemove.add(bubble);
-    }
-
-    public List<Bubble> getBubbles() {
-        return bubbles;
     }
 }

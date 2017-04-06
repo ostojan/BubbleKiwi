@@ -15,7 +15,6 @@ public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubbl
         DYING
     }
     private BubblesController bubblesController;
-    private World world;
     private float radius;
     private float startX;
 

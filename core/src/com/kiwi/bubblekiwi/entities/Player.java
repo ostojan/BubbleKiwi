@@ -2,7 +2,6 @@ package com.kiwi.bubblekiwi.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 
