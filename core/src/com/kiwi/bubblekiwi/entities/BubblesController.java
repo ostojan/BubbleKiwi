@@ -17,7 +17,6 @@ import java.util.List;
 public class BubblesController extends Actor {
     private List<Bubble> bubbles;
     private List<Bubble> bubblesToRemove;
-    private float spawnTime;
     private World world;
     private Assets assets;
     private float time;
@@ -31,11 +30,12 @@ public class BubblesController extends Actor {
     private void initialize() {
         bubbles = new ArrayList<Bubble>();
         bubblesToRemove = new ArrayList<Bubble>();
+        createNewBubble();
         scheduleCreationOfNewBubble();
     }
 
     private void scheduleCreationOfNewBubble() {
-        randomizeSpawnTime();
+        float spawnTime = randomizeSpawnTime();
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
@@ -69,7 +69,7 @@ public class BubblesController extends Actor {
         return new Animation<TextureRegion>(1.0f / 15.0f, regions);
     }
 
-    private void randomizeSpawnTime() {
+    private float randomizeSpawnTime() {
         float startTime;
         float endTime;
         if (time >= 1.8f) {
@@ -84,7 +84,7 @@ public class BubblesController extends Actor {
         } else {
             endTime -= time / 10.0f;
         }
-        spawnTime = MathUtils.random(startTime, endTime);
+        return MathUtils.random(startTime, endTime);
     }
 
 
