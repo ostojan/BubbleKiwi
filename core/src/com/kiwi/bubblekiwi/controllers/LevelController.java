@@ -4,6 +4,11 @@ public class LevelController {
     private int lives;
     private int points;
 
+    public LevelController() {
+        this.lives = 3;
+        this.points = 0;
+    }
+
     public void addPoints(int points) {
         this.points += points;
     }
