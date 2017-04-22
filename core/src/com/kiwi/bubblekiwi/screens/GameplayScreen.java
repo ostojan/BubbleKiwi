@@ -31,6 +31,7 @@ public class GameplayScreen extends AbstractScreen {
     private HashMap<GameplayBoundaryType, GameplayBoundary> boundaries;
     private Label points;
     private Label lives;
+    private Label gameOver;
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
@@ -49,6 +50,7 @@ public class GameplayScreen extends AbstractScreen {
         levelController = new LevelController();
         initializePointsLabel();
         initializeLivesIndicator();
+        initializeGameOverMessage();
         world.setContactListener(new GameplayContactListener(player,
                 boundaries.get(GameplayBoundaryType.DOWN), levelController));
         debugRenderer = new Box2DDebugRenderer();
@@ -113,11 +115,11 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(leftButton);
     }
 
-
     private void initializeRightControlButton() {
         rightButton = new MoveButton(MoveButton.MoveButtonTypes.RIGHT, assets);
         stage.addActor(rightButton);
     }
+
 
     private void initializeJumpControlButton() {
         jumpButton = new MoveButton(MoveButton.MoveButtonTypes.JUMP, assets);
@@ -148,6 +150,14 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(lives);
     }
 
+    private void initializeGameOverMessage() {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = assets.get(Assets.arialBig);
+        labelStyle.fontColor = Color.RED;
+        gameOver = new Label("Game Over", labelStyle);
+        gameOver.setPosition((BubbleKiwiGame.WIDTH - gameOver.getWidth()) / 2.0f, (BubbleKiwiGame.HEIGHT - gameOver.getHeight()) / 2.0f);
+    }
+
     @Override
     public void render(float delta) {
         super.render(delta);
@@ -162,14 +172,20 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void update(float delta) {
-        if (leftButton.isPressed()) {
-            player.moveLeft();
+        if (levelController.getLives() <= 0) {
+            stage.addActor(gameOver);
+            levelController.setState(LevelController.LevelState.GAME_OVER);
         }
-        if (rightButton.isPressed()) {
-            player.moveRight();
-        }
-        if (jumpButton.isPressed()) {
-            player.jump();
+        if (levelController.getState() == LevelController.LevelState.PLAY) {
+            if (leftButton.isPressed()) {
+                player.moveLeft();
+            }
+            if (rightButton.isPressed()) {
+                player.moveRight();
+            }
+            if (jumpButton.isPressed()) {
+                player.jump();
+            }
         }
         worldStage.act(delta);
 
