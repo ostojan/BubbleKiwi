@@ -8,7 +8,11 @@ import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Assets implements Disposable {
@@ -37,11 +41,33 @@ public class Assets implements Disposable {
     public static AssetDescriptor<Texture> arrow =
             new AssetDescriptor<Texture>("ui/arrow.png", Texture.class);
 
+    public static AssetDescriptor<BitmapFont> arialSmall;
+    public static AssetDescriptor<BitmapFont> arialMedium;
+    public static AssetDescriptor<BitmapFont> arialBig;
+
+    static {
+        FreetypeFontLoader.FreeTypeFontLoaderParameter smallFontParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        smallFontParams.fontFileName = "fonts/arial.ttf";
+        smallFontParams.fontParameters.size = 25;
+        ;
+        arialSmall = new AssetDescriptor<BitmapFont>("arialSmall.ttf", BitmapFont.class, smallFontParams);
+        FreetypeFontLoader.FreeTypeFontLoaderParameter mediumFontParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        mediumFontParams.fontFileName = "fonts/arial.ttf";
+        mediumFontParams.fontParameters.size = 50;
+        arialMedium = new AssetDescriptor<BitmapFont>("arialMedium.ttf", BitmapFont.class, mediumFontParams);
+        FreetypeFontLoader.FreeTypeFontLoaderParameter bigFontParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        bigFontParams.fontFileName = "fonts/arial.ttf";
+        bigFontParams.fontParameters.size = 75;
+        arialBig = new AssetDescriptor<BitmapFont>("arialBig.ttf", BitmapFont.class, bigFontParams);
+    }
+
     public Assets() {
         manager = new AssetManager();
         FileHandleResolver resolver = createResolutionFileResolver();
         manager.setLoader(Texture.class, new TextureLoader(resolver));
         manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(resolver));
+        manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        manager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
     }
 
     private FileHandleResolver createResolutionFileResolver() {
@@ -50,6 +76,13 @@ public class Assets implements Disposable {
         ResolutionFileResolver.Resolution fhd = new ResolutionFileResolver.Resolution(1920, 1080, "fhd");
         ResolutionFileResolver.Resolution qhd = new ResolutionFileResolver.Resolution(2560, 1440, "qhd");
         return new ResolutionFileResolver(new InternalFileHandleResolver(), sd, hd, fhd, qhd);
+    }
+
+    public void loadMenuScreen() {
+        manager.load(arialSmall);
+        manager.load(arialMedium);
+        manager.load(arialBig);
+        manager.finishLoading();
     }
 
     public void loadGameplayScreen() {
