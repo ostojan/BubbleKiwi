@@ -20,14 +20,20 @@ public class MenuScreen extends AbstractScreen {
     @Override
     protected void initialize() {
         backgroundColor = Color.BLACK;
+        initializeAssets();
         initializeButtonsStyle();
         initializeNewGameButton();
         initializeHighScoreButton();
     }
 
+    private void initializeAssets() {
+        assets.loadMenuScreen();
+    }
+
     private void initializeButtonsStyle() {
         buttonStyle = new TextButton.TextButtonStyle();
-        buttonStyle.font = new BitmapFont();
+        buttonStyle.font = assets.get(Assets.arialSmall);
+        buttonStyle.fontColor = Color.WHITE;
     }
 
     private void initializeNewGameButton() {
@@ -47,9 +53,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void initializeHighScoreButton() {
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
-        style.font = new BitmapFont();
-        highScoreButton = new TextButton("High score", style);
+        highScoreButton = new TextButton("High score", buttonStyle);
         highScoreButton.setSize(150.0f, 50.0f);
         highScoreButton.setOrigin(75.0f, 25.0f);
         highScoreButton.setPosition(BubbleKiwiGame.WIDTH / 2.0f + 10.0f, BubbleKiwiGame.HEIGHT / 2.0f - 25.0f);
