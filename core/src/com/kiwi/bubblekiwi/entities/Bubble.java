@@ -30,7 +30,7 @@ public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubbl
     protected void initializeBody() {
         randomizeStartXAndRadius();
         super.initializeBody();
-        getActorBody().setGravityScale(0.01f);
+        getActorBody().setGravityScale(0.005f);
     }
 
     private void randomizeStartXAndRadius() {
