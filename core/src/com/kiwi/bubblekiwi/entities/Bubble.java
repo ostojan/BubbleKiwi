@@ -44,7 +44,7 @@ public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubbl
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(
                 startX / BubbleKiwiGame.PPM,
-                (BubbleKiwiGame.HEIGHT + radius) / BubbleKiwiGame.PPM
+                (BubbleKiwiGame.HEIGHT + 100.0f + radius) / BubbleKiwiGame.PPM
         );
         return bodyDef;
     }
