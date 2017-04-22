@@ -9,11 +9,17 @@ public class LevelController {
     private int lives;
     private int points;
     private LevelState state;
+    private float stateTime;
 
     public LevelController() {
         this.lives = 3;
         this.points = 0;
-        state = LevelState.PLAY;
+        this.state = LevelState.PLAY;
+        this.stateTime = 0.0f;
+    }
+
+    public void addTime(float time) {
+        stateTime += time;
     }
 
     public void addPoints(int points) {
@@ -56,11 +62,16 @@ public class LevelController {
         return points;
     }
 
+    public float getStateTime() {
+        return stateTime;
+    }
+
     public LevelState getState() {
         return state;
     }
 
     public void setState(LevelState state) {
+        this.stateTime = 0.0f;
         this.state = state;
     }
 }

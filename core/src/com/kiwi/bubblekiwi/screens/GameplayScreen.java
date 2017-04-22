@@ -172,20 +172,28 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void update(float delta) {
-        if (levelController.getLives() <= 0) {
-            stage.addActor(gameOver);
-            levelController.setState(LevelController.LevelState.GAME_OVER);
-        }
-        if (levelController.getState() == LevelController.LevelState.PLAY) {
-            if (leftButton.isPressed()) {
-                player.moveLeft();
-            }
-            if (rightButton.isPressed()) {
-                player.moveRight();
-            }
-            if (jumpButton.isPressed()) {
-                player.jump();
-            }
+        levelController.addTime(delta);
+        switch (levelController.getState()) {
+            case PLAY:
+                if (leftButton.isPressed()) {
+                    player.moveLeft();
+                }
+                if (rightButton.isPressed()) {
+                    player.moveRight();
+                }
+                if (jumpButton.isPressed()) {
+                    player.jump();
+                }
+                if (levelController.getLives() <= 0) {
+                    stage.addActor(gameOver);
+                    levelController.setState(LevelController.LevelState.GAME_OVER);
+                }
+                break;
+            case GAME_OVER:
+                if (levelController.getStateTime() > 3.0f) {
+                    game.setScreen(new MenuScreen(game, assets));
+                }
+                break;
         }
         worldStage.act(delta);
 
