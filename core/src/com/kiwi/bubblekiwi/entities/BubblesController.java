@@ -17,9 +17,10 @@ import java.util.List;
 public class BubblesController extends Actor {
     private List<Bubble> bubbles;
     private List<Bubble> bubblesToRemove;
-    private int spawnTime;
+    private float spawnTime;
     private World world;
     private Assets assets;
+    private float time;
 
     public BubblesController(World world, Assets assets) {
         this.world = world;
@@ -69,13 +70,28 @@ public class BubblesController extends Actor {
     }
 
     private void randomizeSpawnTime() {
-        spawnTime = MathUtils.random(2, 4);
+        float startTime;
+        float endTime;
+        if (time >= 1.8f) {
+            startTime = 0.2f;
+            endTime = 2.2f;
+        } else {
+            startTime = 2.0f - time;
+            endTime = 4.0f - time;
+        }
+        if (time / 10.0f >= endTime - 0.2f) {
+            endTime = 0.4f;
+        } else {
+            endTime -= time / 10.0f;
+        }
+        spawnTime = MathUtils.random(startTime, endTime);
     }
 
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        time += delta / 40.0f;
         actBubbles(delta);
         removeUnusedBubbles();
     }
