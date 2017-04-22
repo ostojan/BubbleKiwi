@@ -1,10 +1,13 @@
 package com.kiwi.bubblekiwi.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.LevelController;
@@ -27,7 +30,7 @@ public class GameplayScreen extends AbstractScreen {
     private HashMap<GameplayBoundaryType, GameplayBoundary> boundaries;
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets) {
-        super(game, assets, true);
+        super(game, assets);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class GameplayScreen extends AbstractScreen {
                 fog,
                 ground
         });
-        stage.addActor(background);
+        worldStage.addActor(background);
     }
 
     private void initializeBoundaries() {
@@ -86,12 +89,12 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initializePlayer() {
         player = new Player(world, assets);
-        stage.addActor(player);
+        worldStage.addActor(player);
     }
 
     private void initializeBubblesController() {
         bubblesController = new BubblesController(world, assets);
-        stage.addActor(bubblesController);
+        worldStage.addActor(bubblesController);
     }
 
     private void initializePlayerControlButtons() {
@@ -122,7 +125,8 @@ public class GameplayScreen extends AbstractScreen {
         world.step(delta, 6, 2);
 
         update(delta);
-        Matrix4 projectionMatrix = stage.getCamera().combined.cpy();
+        Matrix4 projectionMatrix = worldStage.getCamera().combined.cpy();
+        worldStage.draw();
         stage.draw();
         debugRenderer.render(world, projectionMatrix);
     }
@@ -137,6 +141,8 @@ public class GameplayScreen extends AbstractScreen {
         if (jumpButton.isPressed()) {
             player.jump();
         }
+        worldStage.act(delta);
+
         stage.act(delta);
     }
 }

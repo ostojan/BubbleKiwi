@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
@@ -13,41 +14,35 @@ import com.kiwi.bubblekiwi.controllers.Assets;
 public abstract class AbstractScreen implements Screen {
     protected BubbleKiwiGame game;
     protected Stage stage;
+    protected Stage worldStage;
     protected Color backgroundColor;
     protected Assets assets;
 
     private OrthographicCamera camera;
+    private OrthographicCamera worldCamera;
 
     public AbstractScreen(BubbleKiwiGame game, Assets assets) {
-        this(game, assets, false);
-    }
-
-    public AbstractScreen(BubbleKiwiGame game, Assets assets, boolean realWorldCamera) {
         this.game = game;
         this.assets = assets;
-        createCamera(realWorldCamera);
-        createStage(realWorldCamera);
+        createCameras();
+        createStages();
         Gdx.input.setInputProcessor(stage);
         initialize();
         Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g,  backgroundColor.b, backgroundColor.a);
     }
 
-    private void createCamera(boolean realWorldCamera) {
+    private void createCameras() {
+        worldCamera = new OrthographicCamera();
+        worldCamera.setToOrtho(false, BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM);
+        worldCamera.update();
         camera = new OrthographicCamera();
-        if (realWorldCamera) {
-            camera.setToOrtho(false, BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM);
-        } else {
-            camera.setToOrtho(false, BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
-        }
+        camera.setToOrtho(false, BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
         camera.update();
     }
 
-    private void createStage(boolean realWorldCamera) {
-        if (realWorldCamera) {
-            stage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM, camera));
-        } else {
-            stage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, camera));
-        }
+    private void createStages() {
+        worldStage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM, worldCamera));
+        stage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, camera));
     }
 
     protected abstract void initialize();
@@ -60,6 +55,7 @@ public abstract class AbstractScreen implements Screen {
     public void render(float delta) {
         clearScreen();
         camera.update();
+        worldCamera.update();
     }
 
     private void clearScreen() {

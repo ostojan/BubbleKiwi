@@ -44,9 +44,9 @@ public class MoveButton extends ImageButton {
     }
 
     private void initialize(MoveButtonTypes type) {
-        setSize(WIDTH / BubbleKiwiGame.PPM, HEIGHT / BubbleKiwiGame.PPM);
-        setOrigin((WIDTH / 2.0f) / BubbleKiwiGame.PPM, (HEIGHT / 2.0f) / BubbleKiwiGame.PPM);
-        setPosition(type.getX() / BubbleKiwiGame.PPM, type.getY() / BubbleKiwiGame.PPM);
+        setSize(WIDTH, HEIGHT);
+        setOrigin((WIDTH / 2.0f), (HEIGHT / 2.0f));
+        setPosition(type.getX(), type.getY());
         setTransform(true);
         setRotation(type.getImageRotation());
     }
