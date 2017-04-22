@@ -28,6 +28,7 @@ public class GameplayScreen extends AbstractScreen {
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private HashMap<GameplayBoundaryType, GameplayBoundary> boundaries;
+    private Label points;
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
@@ -43,6 +44,7 @@ public class GameplayScreen extends AbstractScreen {
         initializePlayer();
         initializeBubblesController();
         initializePlayerControlButtons();
+        initializePointsLabel();
         levelController = new LevelController();
         world.setContactListener(new GameplayContactListener(player,
                 boundaries.get(GameplayBoundaryType.DOWN), levelController));
@@ -103,6 +105,14 @@ public class GameplayScreen extends AbstractScreen {
         initializeJumpControlButton();
     }
 
+    private void initializePointsLabel() {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = assets.get(Assets.arialMedium);
+        points = new Label("0", labelStyle);
+        points.setPosition(25.0f, BubbleKiwiGame.HEIGHT - 75.0f);
+        stage.addActor(points);
+    }
+
     private void initializeLeftControlButton() {
         leftButton = new MoveButton(MoveButton.MoveButtonTypes.LEFT, assets);
         stage.addActor(leftButton);
@@ -143,6 +153,7 @@ public class GameplayScreen extends AbstractScreen {
         }
         worldStage.act(delta);
 
+        points.setText(String.format("%d", levelController.getPoints()));
         stage.act(delta);
     }
 }
