@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.LevelController;
@@ -29,6 +30,7 @@ public class GameplayScreen extends AbstractScreen {
     private Box2DDebugRenderer debugRenderer;
     private HashMap<GameplayBoundaryType, GameplayBoundary> boundaries;
     private Label points;
+    private Label lives;
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
@@ -44,8 +46,9 @@ public class GameplayScreen extends AbstractScreen {
         initializePlayer();
         initializeBubblesController();
         initializePlayerControlButtons();
-        initializePointsLabel();
         levelController = new LevelController();
+        initializePointsLabel();
+        initializeLivesIndicator();
         world.setContactListener(new GameplayContactListener(player,
                 boundaries.get(GameplayBoundaryType.DOWN), levelController));
         debugRenderer = new Box2DDebugRenderer();
@@ -105,18 +108,11 @@ public class GameplayScreen extends AbstractScreen {
         initializeJumpControlButton();
     }
 
-    private void initializePointsLabel() {
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = assets.get(Assets.arialMedium);
-        points = new Label("0", labelStyle);
-        points.setPosition(25.0f, BubbleKiwiGame.HEIGHT - 75.0f);
-        stage.addActor(points);
-    }
-
     private void initializeLeftControlButton() {
         leftButton = new MoveButton(MoveButton.MoveButtonTypes.LEFT, assets);
         stage.addActor(leftButton);
     }
+
 
     private void initializeRightControlButton() {
         rightButton = new MoveButton(MoveButton.MoveButtonTypes.RIGHT, assets);
@@ -126,6 +122,30 @@ public class GameplayScreen extends AbstractScreen {
     private void initializeJumpControlButton() {
         jumpButton = new MoveButton(MoveButton.MoveButtonTypes.JUMP, assets);
         stage.addActor(jumpButton);
+    }
+
+    private void initializePointsLabel() {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = assets.get(Assets.arialMedium);
+        labelStyle.fontColor = Color.GOLD;
+        points = new Label(String.format("%d", levelController.getPoints()), labelStyle);
+        points.setAlignment(Align.left);
+        points.setWrap(true);
+        points.setWidth(BubbleKiwiGame.WIDTH / 3.0f);
+        points.setPosition(25.0f, BubbleKiwiGame.HEIGHT - 75.0f);
+        stage.addActor(points);
+    }
+
+    private void initializeLivesIndicator() {
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = assets.get(Assets.arialMedium);
+        labelStyle.fontColor = Color.RED;
+        lives = new Label(String.format("%d", levelController.getLives()), labelStyle);
+        lives.setAlignment(Align.right);
+        lives.setWrap(true);
+        lives.setWidth(BubbleKiwiGame.WIDTH / 3.0f);
+        lives.setPosition(BubbleKiwiGame.WIDTH - lives.getWidth() - 25.0f, BubbleKiwiGame.HEIGHT - 75.0f);
+        stage.addActor(lives);
     }
 
     @Override
@@ -154,6 +174,7 @@ public class GameplayScreen extends AbstractScreen {
         worldStage.act(delta);
 
         points.setText(String.format("%d", levelController.getPoints()));
+        lives.setText(String.format("%d", levelController.getLives()));
         stage.act(delta);
     }
 }
