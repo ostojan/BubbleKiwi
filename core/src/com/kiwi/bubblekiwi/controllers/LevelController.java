@@ -30,13 +30,21 @@ public class LevelController {
 
     public void subtractPoints(int points) {
         if (state == LevelState.PLAY) {
-            this.points -= points;
+            if (points > this.points) {
+                this.points = 0;
+            } else {
+                this.points -= points;
+            }
         }
     }
 
     public void subtractLives(int lives) {
         if (state == LevelState.PLAY) {
-            this.lives -= lives;
+            if (lives > this.lives) {
+                this.lives = 0;
+            } else {
+                this.lives -= lives;
+            }
         }
     }
 
