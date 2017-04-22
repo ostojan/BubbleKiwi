@@ -8,10 +8,12 @@ import com.kiwi.bubblekiwi.entities.Player;
 public class GameplayContactListener implements ContactListener {
     private Player player;
     private GameplayBoundary ground;
+    private LevelController levelController;
 
-    public GameplayContactListener(Player player, GameplayBoundary groundBoundary) {
+    public GameplayContactListener(Player player, GameplayBoundary groundBoundary, LevelController levelController) {
         this.player = player;
         this.ground = groundBoundary;
+        this.levelController = levelController;
     }
 
     @Override
@@ -24,11 +26,13 @@ public class GameplayContactListener implements ContactListener {
             Bubble bubble = findBubbleThatTouchedGround(firstContactBody, secondContactBody);
             if (bubble != null) {
                 bubble.destroy();
+                levelController.subtractLives(1);
             }
         } else if (playerTouchedBubble(firstContactBody, secondContactBody)) {
             Bubble bubble = findBubbleThatTouchedPlayer(firstContactBody, secondContactBody);
             if (bubble != null) {
                 bubble.destroy();
+                levelController.addPoints(1);
             }
         }
     }

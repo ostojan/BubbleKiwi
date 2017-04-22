@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
+import com.kiwi.bubblekiwi.controllers.LevelController;
 import com.kiwi.bubblekiwi.entities.*;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.ui.MoveButton;
@@ -17,6 +18,7 @@ public class GameplayScreen extends AbstractScreen {
     private ParallaxBackground background;
     private Player player;
     private BubblesController bubblesController;
+    private LevelController levelController;
     private MoveButton leftButton;
     private MoveButton rightButton;
     private MoveButton jumpButton;
@@ -38,8 +40,9 @@ public class GameplayScreen extends AbstractScreen {
         initializePlayer();
         initializeBubblesController();
         initializePlayerControlButtons();
+        levelController = new LevelController();
         world.setContactListener(new GameplayContactListener(player,
-                boundaries.get(GameplayBoundaryType.DOWN)));
+                boundaries.get(GameplayBoundaryType.DOWN), levelController));
         debugRenderer = new Box2DDebugRenderer();
     }
 
