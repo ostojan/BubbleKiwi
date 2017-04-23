@@ -1,17 +1,16 @@
 package com.kiwi.bubblekiwi.screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
+import com.kiwi.bubblekiwi.controllers.GameController;
 
 public class MenuScreen extends AbstractScreen {
-    private TextButton newGameButton;
-    private TextButton highScoreButton;
     private TextButton.TextButtonStyle buttonStyle;
+    private GameController gameController;
 
     public MenuScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
@@ -19,14 +18,11 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void initialize() {
-        initializeAssets();
+        assets.loadMenuScreen();
+        gameController = new GameController(game, assets);
         initializeButtonsStyle();
         initializeNewGameButton();
         initializeHighScoreButton();
-    }
-
-    private void initializeAssets() {
-        assets.loadMenuScreen();
     }
 
     private void initializeButtonsStyle() {
@@ -36,7 +32,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void initializeNewGameButton() {
-        newGameButton = new TextButton("Start game", buttonStyle);
+        TextButton newGameButton = new TextButton("Start game", buttonStyle);
         newGameButton.setSize(150.0f, 50.0f);
         newGameButton.setOrigin(75.0f, 25.0f);
         newGameButton.setPosition(BubbleKiwiGame.WIDTH / 2.0f - 160.0f, BubbleKiwiGame.HEIGHT / 2.0f - 25.0f);
@@ -44,7 +40,7 @@ public class MenuScreen extends AbstractScreen {
         newGameButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                goToScreen(new GameplayScreen(game, assets));
+                goToScreen(gameController.getGameplayScreen());
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
@@ -52,7 +48,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void initializeHighScoreButton() {
-        highScoreButton = new TextButton("High score", buttonStyle);
+        TextButton highScoreButton = new TextButton("High score", buttonStyle);
         highScoreButton.setSize(150.0f, 50.0f);
         highScoreButton.setOrigin(75.0f, 25.0f);
         highScoreButton.setPosition(BubbleKiwiGame.WIDTH / 2.0f + 10.0f, BubbleKiwiGame.HEIGHT / 2.0f - 25.0f);

@@ -1,6 +1,5 @@
 package com.kiwi.bubblekiwi.screens;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
@@ -22,15 +21,15 @@ public class GameplayScreen extends AbstractScreen {
     private MoveController moveController;
     private GameplayBoundary ground;
 
-    public GameplayScreen(BubbleKiwiGame game, Assets assets) {
+    public GameplayScreen(BubbleKiwiGame game, Assets assets, LevelController levelController) {
         super(game, assets);
+        this.levelController = levelController;
         initialize();
     }
 
     private void initialize() {
         assets.loadGameplayScreen();
         world = new World(new Vector2(0, -10.0f), true);
-        levelController = new LevelController();
         initializeWorld();
         initializeUI();
         world.setContactListener(new GameplayContactListener(player, ground, levelController));
