@@ -24,11 +24,10 @@ public class GameplayScreen extends AbstractScreen {
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
+        initialize();
     }
 
-    @Override
-    protected void initialize() {
-        backgroundColor = Color.BLACK;
+    private void initialize() {
         assets.loadGameplayScreen();
         world = new World(new Vector2(0, -10.0f), true);
         levelController = new LevelController();

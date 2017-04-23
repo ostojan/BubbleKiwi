@@ -12,7 +12,7 @@ public class SplashScreen extends AbstractScreen {
 
     public SplashScreen(final BubbleKiwiGame game, final Assets assets) {
         super(game, assets);
-
+        initialize();
         // TODO: Add game initialization instead of fixed delay
         Timer.schedule(new Timer.Task() {
             @Override
@@ -22,13 +22,7 @@ public class SplashScreen extends AbstractScreen {
         }, 1);
     }
 
-    @Override
-    protected void initialize() {
-        backgroundColor = Color.BLACK;
-        createSplashImage();
-    }
-
-    private void createSplashImage() {
+    private void initialize() {
         splashImage = new Image(new Texture("badlogic.jpg"));
         splashImage.setSize(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
         splashImage.setPosition(0.0f, 0.0f);

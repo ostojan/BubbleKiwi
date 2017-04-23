@@ -15,11 +15,10 @@ public class MenuScreen extends AbstractScreen {
 
     public MenuScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
+        initialize();
     }
 
-    @Override
-    protected void initialize() {
-        backgroundColor = Color.BLACK;
+    private void initialize() {
         initializeAssets();
         initializeButtonsStyle();
         initializeNewGameButton();

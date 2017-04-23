@@ -15,7 +15,6 @@ public abstract class AbstractScreen implements Screen {
     protected BubbleKiwiGame game;
     protected Stage stage;
     protected Stage worldStage;
-    protected Color backgroundColor;
     protected Assets assets;
 
     private OrthographicCamera camera;
@@ -27,8 +26,7 @@ public abstract class AbstractScreen implements Screen {
         createCameras();
         createStages();
         Gdx.input.setInputProcessor(stage);
-        initialize();
-        Gdx.gl.glClearColor(backgroundColor.r, backgroundColor.g,  backgroundColor.b, backgroundColor.a);
+        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     }
 
     private void createCameras() {
@@ -44,8 +42,6 @@ public abstract class AbstractScreen implements Screen {
         worldStage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH / BubbleKiwiGame.PPM, BubbleKiwiGame.HEIGHT / BubbleKiwiGame.PPM, worldCamera));
         stage = new Stage(new StretchViewport(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, camera));
     }
-
-    protected abstract void initialize();
 
     @Override
     public void show() {
