@@ -1,5 +1,6 @@
 package com.kiwi.bubblekiwi.controllers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,6 +16,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.utils.Disposable;
+import com.kiwi.bubblekiwi.data.Level;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Assets implements Disposable {
     private AssetManager manager;
@@ -68,6 +74,7 @@ public class Assets implements Disposable {
         manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(resolver));
         manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
         manager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+        manager.setLoader(Level.class, new LevelLoader(resolver));
     }
 
     private FileHandleResolver createResolutionFileResolver() {
@@ -82,6 +89,7 @@ public class Assets implements Disposable {
         manager.load(arialSmall);
         manager.load(arialMedium);
         manager.load(arialBig);
+        loadLevels();
         manager.finishLoading();
     }
 
@@ -102,6 +110,22 @@ public class Assets implements Disposable {
     public <T> T get(AssetDescriptor<T> descriptor) {
         manager.load(descriptor);
         return manager.get(descriptor);
+    }
+
+    public void loadLevels() {
+        FileHandle levelsDir = Gdx.files.internal("levels");
+        for (FileHandle level : levelsDir.list()) {
+            manager.load(level.path(), Level.class);
+        }
+    }
+
+    public List<Level> getLevels() {
+        List<Level> levels = new ArrayList<Level>();
+        FileHandle levelsDir = Gdx.files.internal("levels");
+        for (FileHandle level : levelsDir.list()) {
+            levels.add(manager.get(level.path(), Level.class));
+        }
+        return levels;
     }
 
     @Override
