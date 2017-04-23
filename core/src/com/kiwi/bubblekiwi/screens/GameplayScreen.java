@@ -24,11 +24,11 @@ public class GameplayScreen extends AbstractScreen {
     private LevelController levelController;
     private World world;
     private Box2DDebugRenderer debugRenderer;
-    private HashMap<GameplayBoundaryType, GameplayBoundary> boundaries;
     private Label points;
     private Label lives;
     private Label gameOver;
     private MoveController moveController;
+    private GameplayBoundary ground;
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
@@ -47,8 +47,7 @@ public class GameplayScreen extends AbstractScreen {
         initializePointsLabel();
         initializeLivesIndicator();
         initializeGameOverMessage();
-        world.setContactListener(new GameplayContactListener(player,
-                boundaries.get(GameplayBoundaryType.DOWN), levelController));
+        world.setContactListener(new GameplayContactListener(player, ground, levelController));
         debugRenderer = new Box2DDebugRenderer();
         moveController = new MoveController(player);
     }
@@ -80,15 +79,10 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeBoundaries() {
-        boundaries = new HashMap<GameplayBoundaryType, GameplayBoundary>();
-        boundaries.put(GameplayBoundaryType.LEFT,
-                new GameplayBoundary(world, GameplayBoundaryType.LEFT));
-        boundaries.put(GameplayBoundaryType.RIGHT,
-                new GameplayBoundary(world, GameplayBoundaryType.RIGHT));
-        boundaries.put(GameplayBoundaryType.UP,
-                new GameplayBoundary(world, GameplayBoundaryType.UP));
-        boundaries.put(GameplayBoundaryType.DOWN,
-                new GameplayBoundary(world, GameplayBoundaryType.DOWN));
+        new GameplayBoundary(world, GameplayBoundaryType.UP);
+        new GameplayBoundary(world, GameplayBoundaryType.LEFT);
+        new GameplayBoundary(world, GameplayBoundaryType.RIGHT);
+        ground = new GameplayBoundary(world, GameplayBoundaryType.DOWN);
     }
 
     private void initializePlayer() {
