@@ -152,7 +152,7 @@ public class GameplayScreen extends AbstractScreen {
                 break;
             case GAME_OVER:
                 if (levelController.getStateTime() > 3.0f) {
-                    game.setScreen(new MenuScreen(game, assets));
+                    goToScreen(new MenuScreen(game, assets));
                 }
                 break;
         }

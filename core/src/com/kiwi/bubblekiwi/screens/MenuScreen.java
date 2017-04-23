@@ -45,7 +45,7 @@ public class MenuScreen extends AbstractScreen {
         newGameButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new GameplayScreen(game, assets));
+                goToScreen(new GameplayScreen(game, assets));
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
