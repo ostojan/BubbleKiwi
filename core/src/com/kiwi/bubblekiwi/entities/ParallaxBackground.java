@@ -3,10 +3,12 @@ package com.kiwi.bubblekiwi.entities;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class ParallaxBackground extends Actor {
-    private ParallaxLayer[] layers;
+import java.util.List;
 
-    public ParallaxBackground(ParallaxLayer[] layers) {
+public class ParallaxBackground extends Actor {
+    private List<ParallaxLayer> layers;
+
+    public ParallaxBackground(List<ParallaxLayer> layers) {
         this.layers = layers;
     }
 

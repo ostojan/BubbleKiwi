@@ -1,5 +1,10 @@
 package com.kiwi.bubblekiwi.controllers;
 
+import com.kiwi.bubblekiwi.data.Background;
+import com.kiwi.bubblekiwi.data.Level;
+
+import java.util.List;
+
 public class LevelController {
     public enum LevelState {
         PLAY,
@@ -10,12 +15,14 @@ public class LevelController {
     private int points;
     private LevelState state;
     private float stateTime;
+    private Level level;
 
-    public LevelController() {
+    public LevelController(Level level) {
         this.lives = 3;
         this.points = 0;
         this.state = LevelState.PLAY;
         this.stateTime = 0.0f;
+        this.level = level;
     }
 
     public void addTime(float time) {
@@ -73,5 +80,9 @@ public class LevelController {
     public void setState(LevelState state) {
         this.stateTime = 0.0f;
         this.state = state;
+    }
+
+    public List<Background> getBackgrounds() {
+        return level.getBackgrounds();
     }
 }

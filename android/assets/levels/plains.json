@@ -1,0 +1,29 @@
+{
+  "id": 1,
+  "backgrounds": [
+    {
+      "file": "far_clouds.png",
+      "speed": 0.002
+    },
+    {
+      "file": "middle_clouds.png",
+      "speed": 0.004
+    },
+    {
+      "file": "mountains.png",
+      "speed": 0.0
+    },
+    {
+      "file": "near_clouds.png",
+      "speed": 0.01
+    },
+    {
+      "file": "fog.png",
+      "speed": -0.0025
+    },
+    {
+      "file": "ground.png",
+      "speed": 0.0
+    }
+  ]
+}

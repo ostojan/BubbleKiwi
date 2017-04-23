@@ -1,5 +1,7 @@
 package com.kiwi.bubblekiwi.screens;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
@@ -7,11 +9,15 @@ import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.controllers.LevelController;
 import com.kiwi.bubblekiwi.controllers.MoveController;
+import com.kiwi.bubblekiwi.data.Background;
 import com.kiwi.bubblekiwi.data.PlayerConfiguration;
 import com.kiwi.bubblekiwi.entities.*;
 import com.kiwi.bubblekiwi.ui.GameOver;
 import com.kiwi.bubblekiwi.ui.Lives;
 import com.kiwi.bubblekiwi.ui.Points;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameplayScreen extends AbstractScreen {
     private Player player;
@@ -37,20 +43,12 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeWorld() {
-        ParallaxLayer farClouds = new ParallaxLayer(assets.get(Assets.farClouds), 0.002f);
-        ParallaxLayer middleClouds = new ParallaxLayer(assets.get(Assets.middleClouds), 0.004f);
-        ParallaxLayer mountains = new ParallaxLayer(assets.get(Assets.mountains), 0.0f);
-        ParallaxLayer nearClouds = new ParallaxLayer(assets.get(Assets.nearClouds), 0.01f);
-        ParallaxLayer fog = new ParallaxLayer(assets.get(Assets.fog), -0.0025f);
-        ParallaxLayer ground = new ParallaxLayer(assets.get(Assets.ground), 0.0f);
-        ParallaxBackground background = new ParallaxBackground(new ParallaxLayer[]{
-                farClouds,
-                middleClouds,
-                mountains,
-                nearClouds,
-                fog,
-                ground
-        });
+        List<ParallaxLayer> layers = new ArrayList<ParallaxLayer>();
+        for (Background background : levelController.getBackgrounds()) {
+            Texture layerTexture = assets.get(new AssetDescriptor<Texture>(String.format("backgrounds/%s", background.getFile()), Texture.class));
+            layers.add(new ParallaxLayer(layerTexture, background.getSpeed()));
+        }
+        ParallaxBackground background = new ParallaxBackground(layers);
 
         new GameplayBoundary(world, GameplayBoundaryType.UP);
         new GameplayBoundary(world, GameplayBoundaryType.LEFT);
