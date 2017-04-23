@@ -7,6 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.GameController;
+import com.kiwi.bubblekiwi.entities.ParallaxBackground;
+import com.kiwi.bubblekiwi.entities.ParallaxLayer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuScreen extends AbstractScreen {
     private TextButton.TextButtonStyle buttonStyle;
@@ -20,9 +25,17 @@ public class MenuScreen extends AbstractScreen {
     private void initialize() {
         assets.loadMenuScreen();
         gameController = new GameController(game, assets);
+        initializeBackground();
         initializeButtonsStyle();
         initializeNewGameButton();
         initializeHighScoreButton();
+    }
+
+    private void initializeBackground() {
+        List<ParallaxLayer> layers = new ArrayList<ParallaxLayer>();
+        layers.add(new ParallaxLayer(assets.get(Assets.menu), 0.0f));
+        ParallaxBackground background = new ParallaxBackground(layers);
+        worldStage.addActor(background);
     }
 
     private void initializeButtonsStyle() {
@@ -60,6 +73,7 @@ public class MenuScreen extends AbstractScreen {
     public void render(float delta) {
         super.render(delta);
 
+        worldStage.draw();
         stage.draw();
     }
 }

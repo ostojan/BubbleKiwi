@@ -24,18 +24,8 @@ import java.util.List;
 public class Assets implements Disposable {
     private AssetManager manager;
 
-    public static final AssetDescriptor<Texture> farClouds =
-            new AssetDescriptor<Texture>("backgrounds/far_clouds.png", Texture.class);
-    public static final AssetDescriptor<Texture> middleClouds =
-            new AssetDescriptor<Texture>("backgrounds/middle_clouds.png", Texture.class);
-    public static final AssetDescriptor<Texture> mountains =
-            new AssetDescriptor<Texture>("backgrounds/mountains.png", Texture.class);
-    public static final AssetDescriptor<Texture> nearClouds =
-            new AssetDescriptor<Texture>("backgrounds/near_clouds.png", Texture.class);
-    public static final AssetDescriptor<Texture> fog =
-            new AssetDescriptor<Texture>("backgrounds/fog.png", Texture.class);
-    public static final AssetDescriptor<Texture> ground =
-            new AssetDescriptor<Texture>("backgrounds/ground.png", Texture.class);
+    public static final AssetDescriptor<Texture> menu =
+            new AssetDescriptor<Texture>("backgrounds/menu.png", Texture.class);
 
     public static final AssetDescriptor<Texture> player =
             new AssetDescriptor<Texture>("sprites/kiwi.png", Texture.class);
@@ -43,9 +33,6 @@ public class Assets implements Disposable {
             new AssetDescriptor<TextureAtlas>("sprites/bubbles.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> bubbleDeath =
             new AssetDescriptor<TextureAtlas>("sprites/bubble_death.atlas", TextureAtlas.class);
-
-    public static AssetDescriptor<Texture> arrow =
-            new AssetDescriptor<Texture>("ui/arrow.png", Texture.class);
 
     public static AssetDescriptor<BitmapFont> arialSmall;
     public static AssetDescriptor<BitmapFont> arialMedium;
@@ -55,7 +42,6 @@ public class Assets implements Disposable {
         FreetypeFontLoader.FreeTypeFontLoaderParameter smallFontParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         smallFontParams.fontFileName = "fonts/arial.ttf";
         smallFontParams.fontParameters.size = 25;
-        ;
         arialSmall = new AssetDescriptor<BitmapFont>("arialSmall.ttf", BitmapFont.class, smallFontParams);
         FreetypeFontLoader.FreeTypeFontLoaderParameter mediumFontParams = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
         mediumFontParams.fontFileName = "fonts/arial.ttf";
@@ -86,6 +72,7 @@ public class Assets implements Disposable {
     }
 
     public void loadMenuScreen() {
+        manager.load(menu);
         manager.load(arialSmall);
         manager.load(arialMedium);
         manager.load(arialBig);
@@ -94,22 +81,22 @@ public class Assets implements Disposable {
     }
 
     public void loadGameplayScreen() {
-        manager.load(farClouds);
-        manager.load(middleClouds);
-        manager.load(mountains);
-        manager.load(nearClouds);
-        manager.load(fog);
-        manager.load(ground);
         manager.load(player);
         manager.load(bubbles);
         manager.load(bubbleDeath);
-        manager.load(arrow);
         manager.finishLoading();
     }
 
     public <T> T get(AssetDescriptor<T> descriptor) {
-        manager.load(descriptor);
         return manager.get(descriptor);
+    }
+
+    public <T> void load(AssetDescriptor<T> descriptor) {
+        manager.load(descriptor);
+    }
+
+    public void finishLoading() {
+        manager.finishLoading();
     }
 
     public void loadLevels() {

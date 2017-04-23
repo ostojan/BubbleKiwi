@@ -34,12 +34,19 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initialize() {
-        assets.loadGameplayScreen();
+        initializeAssets();
         world = new World(new Vector2(0, -10.0f), true);
         initializeWorld();
         initializeUI();
         world.setContactListener(new GameplayContactListener(player, ground, levelController));
         moveController = new MoveController(player);
+    }
+
+    private void initializeAssets() {
+        for (Background background : levelController.getBackgrounds()) {
+            assets.load(new AssetDescriptor<Texture>(String.format("backgrounds/%s", background.getFile()), Texture.class));
+        }
+        assets.loadGameplayScreen();
     }
 
     private void initializeWorld() {
