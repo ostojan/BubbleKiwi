@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Align;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.LevelController;
+import com.kiwi.bubblekiwi.data.PlayerConfiguration;
 import com.kiwi.bubblekiwi.entities.*;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.ui.MoveButton;
@@ -95,7 +96,7 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializePlayer() {
-        player = new Player(world, assets);
+        player = new Player(world, assets, new PlayerConfiguration(0.05f, 1.8f));
         worldStage.addActor(player);
     }
 
