@@ -1,8 +1,6 @@
 package com.kiwi.bubblekiwi.screens;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -11,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
+import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.controllers.LevelController;
+import com.kiwi.bubblekiwi.controllers.MoveController;
 import com.kiwi.bubblekiwi.data.PlayerConfiguration;
 import com.kiwi.bubblekiwi.entities.*;
-import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
-import com.kiwi.bubblekiwi.ui.MoveButton;
 
 import java.util.HashMap;
 
@@ -24,15 +22,13 @@ public class GameplayScreen extends AbstractScreen {
     private Player player;
     private BubblesController bubblesController;
     private LevelController levelController;
-    private MoveButton leftButton;
-    private MoveButton rightButton;
-    private MoveButton jumpButton;
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private HashMap<GameplayBoundaryType, GameplayBoundary> boundaries;
     private Label points;
     private Label lives;
     private Label gameOver;
+    private MoveController moveController;
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets) {
         super(game, assets);
@@ -47,7 +43,6 @@ public class GameplayScreen extends AbstractScreen {
         initializeBoundaries();
         initializePlayer();
         initializeBubblesController();
-        initializePlayerControlButtons();
         levelController = new LevelController();
         initializePointsLabel();
         initializeLivesIndicator();
@@ -55,6 +50,7 @@ public class GameplayScreen extends AbstractScreen {
         world.setContactListener(new GameplayContactListener(player,
                 boundaries.get(GameplayBoundaryType.DOWN), levelController));
         debugRenderer = new Box2DDebugRenderer();
+        moveController = new MoveController(player);
     }
 
     private void initializeAssets() {
@@ -103,28 +99,6 @@ public class GameplayScreen extends AbstractScreen {
     private void initializeBubblesController() {
         bubblesController = new BubblesController(world, assets);
         worldStage.addActor(bubblesController);
-    }
-
-    private void initializePlayerControlButtons() {
-        initializeLeftControlButton();
-        initializeRightControlButton();
-        initializeJumpControlButton();
-    }
-
-    private void initializeLeftControlButton() {
-        leftButton = new MoveButton(MoveButton.MoveButtonTypes.LEFT, assets);
-        stage.addActor(leftButton);
-    }
-
-    private void initializeRightControlButton() {
-        rightButton = new MoveButton(MoveButton.MoveButtonTypes.RIGHT, assets);
-        stage.addActor(rightButton);
-    }
-
-
-    private void initializeJumpControlButton() {
-        jumpButton = new MoveButton(MoveButton.MoveButtonTypes.JUMP, assets);
-        stage.addActor(jumpButton);
     }
 
     private void initializePointsLabel() {
@@ -176,15 +150,7 @@ public class GameplayScreen extends AbstractScreen {
         levelController.addTime(delta);
         switch (levelController.getState()) {
             case PLAY:
-                if (leftButton.isPressed()) {
-                    player.moveLeft();
-                }
-                if (rightButton.isPressed()) {
-                    player.moveRight();
-                }
-                if (jumpButton.isPressed()) {
-                    player.jump();
-                }
+                moveController.move();
                 if (levelController.getLives() <= 0) {
                     stage.addActor(gameOver);
                     levelController.setState(LevelController.LevelState.GAME_OVER);
