@@ -1,5 +1,8 @@
 package com.kiwi.bubblekiwi.data;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.graphics.Texture;
+
 public class Background {
     private String file;
     private float speed;
@@ -18,5 +21,9 @@ public class Background {
 
     public float getSpeed() {
         return speed;
+    }
+
+    public AssetDescriptor<Texture> getAssetDescriptor() {
+        return new AssetDescriptor<Texture>(String.format("backgrounds/%s", file), Texture.class);
     }
 }

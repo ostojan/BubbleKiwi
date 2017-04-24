@@ -44,7 +44,7 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initializeAssets() {
         for (Background background : levelController.getBackgrounds()) {
-            assets.load(new AssetDescriptor<Texture>(String.format("backgrounds/%s", background.getFile()), Texture.class));
+            assets.load(background.getAssetDescriptor());
         }
         assets.loadGameplayScreen();
     }
@@ -52,7 +52,7 @@ public class GameplayScreen extends AbstractScreen {
     private void initializeWorld() {
         List<ParallaxLayer> layers = new ArrayList<ParallaxLayer>();
         for (Background background : levelController.getBackgrounds()) {
-            Texture layerTexture = assets.get(new AssetDescriptor<Texture>(String.format("backgrounds/%s", background.getFile()), Texture.class));
+            Texture layerTexture = assets.get(background.getAssetDescriptor());
             layers.add(new ParallaxLayer(layerTexture, background.getSpeed()));
         }
         ParallaxBackground background = new ParallaxBackground(layers);
