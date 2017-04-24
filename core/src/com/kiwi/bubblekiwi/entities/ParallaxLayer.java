@@ -12,22 +12,22 @@ public class ParallaxLayer extends WorldImage {
     private float scrollTime;
     private float step;
 
-    public ParallaxLayer(Texture texture, float speed) {
+    public ParallaxLayer(Texture texture, float width, float height, float speed) {
         super();
         this.texture = texture;
         this.speed = speed;
         scrollTime = 0.0f;
-        initialize();
+        initialize(width, height);
     }
 
-    private void initialize() {
+    private void initialize(float width, float height) {
         float textureRatio = (float) texture.getWidth() / (float) texture.getHeight();
-        float backgroundRatio = (float) BubbleKiwiGame.WIDTH / (float) BubbleKiwiGame.HEIGHT;
+        float backgroundRatio = width / height;
         step = backgroundRatio / textureRatio;
         texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
         textureRegion = new TextureRegion(texture, 0.0f, 0.0f, step, 1.0f);
         setDrawable(new TextureRegionDrawable(textureRegion));
-        setSize(BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT);
+        setSize(width, height);
     }
 
     @Override

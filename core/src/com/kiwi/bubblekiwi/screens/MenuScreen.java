@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.GameController;
-import com.kiwi.bubblekiwi.entities.ParallaxBackground;
+import com.kiwi.bubblekiwi.entities.ParallaxImage;
 import com.kiwi.bubblekiwi.entities.ParallaxLayer;
 
 import java.util.ArrayList;
@@ -33,8 +33,8 @@ public class MenuScreen extends AbstractScreen {
 
     private void initializeBackground() {
         List<ParallaxLayer> layers = new ArrayList<ParallaxLayer>();
-        layers.add(new ParallaxLayer(assets.get(Assets.menu), 0.0f));
-        ParallaxBackground background = new ParallaxBackground(layers);
+        layers.add(new ParallaxLayer(assets.get(Assets.menu), BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, 0.0f));
+        ParallaxImage background = new ParallaxImage(layers);
         worldStage.addActor(background);
     }
 

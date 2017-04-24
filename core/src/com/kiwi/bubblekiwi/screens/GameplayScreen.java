@@ -1,6 +1,5 @@
 package com.kiwi.bubblekiwi.screens;
 
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -53,9 +52,9 @@ public class GameplayScreen extends AbstractScreen {
         List<ParallaxLayer> layers = new ArrayList<ParallaxLayer>();
         for (Background background : levelController.getBackgrounds()) {
             Texture layerTexture = assets.get(background.getAssetDescriptor());
-            layers.add(new ParallaxLayer(layerTexture, background.getSpeed()));
+            layers.add(new ParallaxLayer(layerTexture, BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, background.getSpeed()));
         }
-        ParallaxBackground background = new ParallaxBackground(layers);
+        ParallaxImage background = new ParallaxImage(layers);
 
         new GameplayBoundary(world, GameplayBoundaryType.UP);
         new GameplayBoundary(world, GameplayBoundaryType.LEFT);

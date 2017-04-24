@@ -5,10 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.List;
 
-public class ParallaxBackground extends Actor {
+public class ParallaxImage extends Actor {
     private List<ParallaxLayer> layers;
 
-    public ParallaxBackground(List<ParallaxLayer> layers) {
+    public ParallaxImage(List<ParallaxLayer> layers) {
         this.layers = layers;
     }
 
