@@ -3,7 +3,7 @@ package com.kiwi.bubblekiwi.controllers;
 import com.badlogic.gdx.physics.box2d.*;
 import com.kiwi.bubblekiwi.world.actors.bubble.Bubble;
 import com.kiwi.bubblekiwi.world.elements.GameplayBoundary;
-import com.kiwi.bubblekiwi.world.actors.Player;
+import com.kiwi.bubblekiwi.world.actors.player.Player;
 
 public class GameplayContactListener implements ContactListener {
     private Player player;

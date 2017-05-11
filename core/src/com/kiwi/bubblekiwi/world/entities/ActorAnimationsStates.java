@@ -32,17 +32,24 @@ public abstract class ActorAnimationsStates<State extends Enum<State>> {
     protected abstract boolean isAnimationLooped();
 
     private void flipFrameIfNeeded(TextureRegion frame) {
-        if (needFlipInX() && !frame.isFlipX()) {
+        if ((directionInX() == Direction.LEFT && !frame.isFlipX()) ||
+                (directionInX() == Direction.RIGHT && frame.isFlipX())) {
             frame.flip(true, false);
         }
-        if (needFlipInY() && !frame.isFlipY()) {
+        if ((directionInY() == Direction.DOWN && !frame.isFlipY()) ||
+                (directionInY() == Direction.UP && frame.isFlipY())) {
             frame.flip(false, true);
         }
     }
 
-    protected abstract boolean needFlipInX();
+    protected Direction directionInX() {
+        return Direction.RIGHT;
+    }
 
-    protected abstract boolean needFlipInY();
+    protected Direction directionInY() {
+        return Direction.UP;
+    }
+
 
     boolean isAnimationFinished(float time) {
         return animations.get(currentState).isAnimationFinished(time);

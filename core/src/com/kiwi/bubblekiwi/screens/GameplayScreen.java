@@ -14,6 +14,7 @@ import com.kiwi.bubblekiwi.data.PlayerConfiguration;
 import com.kiwi.bubblekiwi.ui.GameOver;
 import com.kiwi.bubblekiwi.ui.Lives;
 import com.kiwi.bubblekiwi.ui.Points;
+import com.kiwi.bubblekiwi.world.actors.player.Player;
 import com.kiwi.bubblekiwi.world.elements.GameplayBoundary;
 import com.kiwi.bubblekiwi.world.elements.GameplayBoundaryType;
 
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameplayScreen extends AbstractScreen {
-    private com.kiwi.bubblekiwi.world.actors.Player player;
+    private Player player;
     private LevelController levelController;
     private World world;
     private GameOver gameOver;
@@ -63,7 +64,7 @@ public class GameplayScreen extends AbstractScreen {
         new GameplayBoundary(world, GameplayBoundaryType.RIGHT);
         this.ground = new GameplayBoundary(world, GameplayBoundaryType.DOWN);
 
-        player = new com.kiwi.bubblekiwi.world.actors.Player(world, assets, new PlayerConfiguration(0.05f, 1.8f));
+        player = Player.createPlayer(world, assets);
         BubblesController bubblesController = new BubblesController(world, assets);
 
         worldStage.addActor(background);

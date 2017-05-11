@@ -3,6 +3,7 @@ package com.kiwi.bubblekiwi.world.actors.bubble;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.kiwi.bubblekiwi.world.entities.ActorAnimationsStates;
+import com.kiwi.bubblekiwi.world.entities.Direction;
 
 import java.util.Map;
 
@@ -13,22 +14,6 @@ public class BubbleAnimationsStates extends ActorAnimationsStates<BubbleStates> 
 
     @Override
     protected boolean isAnimationLooped() {
-        switch (currentState) {
-            case FALLING:
-                return true;
-            case DYING:
-                return false;
-        }
-        return false;
-    }
-
-    @Override
-    protected boolean needFlipInX() {
-        return false;
-    }
-
-    @Override
-    protected boolean needFlipInY() {
         return false;
     }
 

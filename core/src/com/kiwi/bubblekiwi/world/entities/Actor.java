@@ -57,6 +57,11 @@ public abstract class Actor extends Image implements Disposable {
         }
     }
 
+    public boolean isMoving() {
+        Vector2 velocity = actorBody.getLinearVelocity();
+        return Math.abs(velocity.x) != 0.0f || Math.abs(velocity.y) != 0.0f;
+    }
+
     @Override
     public void setOrigin(float originX, float originY) {
         super.setOrigin(originX / BubbleKiwiGame.PPM, originY / BubbleKiwiGame.PPM);

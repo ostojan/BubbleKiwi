@@ -1,21 +1,40 @@
-package com.kiwi.bubblekiwi.world.actors;
+package com.kiwi.bubblekiwi.world.actors.player;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.data.PlayerConfiguration;
-import com.kiwi.bubblekiwi.world.entities.Actor;
+import com.kiwi.bubblekiwi.world.entities.AnimatedActor;
 
-public class Player extends Actor {
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.kiwi.bubblekiwi.world.actors.player.PlayerStates.*;
+
+public class Player extends AnimatedActor<PlayerStates> {
     private static final float WIDTH = 120;
     private static final float HEIGHT = 157;
 
     private boolean isInAir;
     private PlayerConfiguration configuration;
 
-    public Player(World world, Assets assets, PlayerConfiguration configuration) {
-        super(world);
-        setDrawable(assets.get(Assets.player));
+    public static Player createPlayer(World world, Assets assets) {
+        Map<PlayerStates, Animation<TextureRegion>> animations = new HashMap<PlayerStates, Animation<TextureRegion>>();
+        Animation<TextureRegion> stayAnimation = new Animation<TextureRegion>(1.0f, assets.get(Assets.kiwiMoving).getRegions().first());
+        Animation<TextureRegion> moveAnimation = new Animation<TextureRegion>(1.0f / 15.0f, assets.get(Assets.kiwiMoving).getRegions());
+        Animation<TextureRegion> jumpAnimation = new Animation<TextureRegion>(1.0f / 30.0f, assets.get(Assets.kiwiJumping).getRegions());
+        animations.put(STAYING, stayAnimation);
+        animations.put(MOVING_LEFT, moveAnimation);
+        animations.put(MOVING_RIGHT, moveAnimation);
+        animations.put(JUMPING, jumpAnimation);
+        PlayerAnimationsStates playerStates = new PlayerAnimationsStates(STAYING, animations);
+        return new Player(world, playerStates, new PlayerConfiguration(0.05f, 1.8f));
+    }
+
+    public Player(World world, PlayerAnimationsStates playerState, PlayerConfiguration configuration) {
+        super(world, playerState);
         this.configuration = configuration;
     }
 
@@ -52,18 +71,21 @@ public class Player extends Actor {
     public void moveRight() {
         if (!isInAir) {
             getActorBody().applyLinearImpulse(configuration.getMoveRightImpulse(), getActorBody().getWorldCenter(), true);
+            setActorState(MOVING_RIGHT);
         }
     }
 
     public void moveLeft() {
         if (!isInAir) {
             getActorBody().applyLinearImpulse(configuration.getMoveLeftImpulse(), getActorBody().getWorldCenter(), true);
+            setActorState(MOVING_LEFT);
         }
     }
 
     public void jump() {
         if (!isInAir) {
             getActorBody().applyLinearImpulse(configuration.getJumpImpulse(), getActorBody().getWorldCenter(), true);
+            setActorState(JUMPING);
             isInAir = true;
         }
     }
@@ -72,10 +94,9 @@ public class Player extends Actor {
     public void act(float delta) {
         super.act(delta);
         updatePosition();
-    }
-
-    public boolean isInAir() {
-        return isInAir;
+        if (!isMoving()) {
+            setActorState(STAYING);
+        }
     }
 
     public void setInAir(boolean inAir) {

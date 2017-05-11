@@ -27,8 +27,10 @@ public class Assets implements Disposable {
     public static final AssetDescriptor<Texture> menu =
             new AssetDescriptor<Texture>("backgrounds/menu.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> player =
-            new AssetDescriptor<Texture>("sprites/kiwi.png", Texture.class);
+    public static final AssetDescriptor<TextureAtlas> kiwiMoving =
+            new AssetDescriptor<TextureAtlas>("sprites/kiwi/moving.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<TextureAtlas> kiwiJumping =
+            new AssetDescriptor<TextureAtlas>("sprites/kiwi/jumping.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> bubbles =
             new AssetDescriptor<TextureAtlas>("sprites/bubbles.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> bubbleDeath =
@@ -81,7 +83,8 @@ public class Assets implements Disposable {
     }
 
     public void loadGameplayScreen() {
-        manager.load(player);
+        manager.load(kiwiMoving);
+        manager.load(kiwiJumping);
         manager.load(bubbles);
         manager.load(bubbleDeath);
         manager.finishLoading();
