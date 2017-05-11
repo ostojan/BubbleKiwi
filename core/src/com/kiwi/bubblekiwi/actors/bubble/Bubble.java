@@ -1,30 +1,21 @@
-package com.kiwi.bubblekiwi.actors;
+package com.kiwi.bubblekiwi.actors.bubble;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.entities.AnimatedWorldActor;
 
-import java.util.HashMap;
-
-public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubble.BubbleState, Animation<TextureRegion>>> implements Disposable {
-    public enum BubbleState {
-        FALLING,
-        DYING
-    }
+public class Bubble extends AnimatedWorldActor<BubbleStates> implements Disposable {
     private BubblesController bubblesController;
     private float radius;
     private float startX;
 
-    private Bubble(World world,
-                  HashMap<BubbleState, Animation<TextureRegion>> animations,
-                  BubblesController bubblesController) {
-        super(world, BubbleState.FALLING, animations);
+    Bubble(World world,
+           BubbleAnimationsStates bubbleState,
+           BubblesController bubblesController) {
+        super(world, bubbleState);
         this.bubblesController = bubblesController;
-
     }
 
     @Override
@@ -72,12 +63,6 @@ public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubbl
         setOrigin(radius, radius);
     }
 
-
-    @Override
-    protected void initializeAnimations(HashMap<BubbleState, Animation<TextureRegion>> animations) {
-        this.animations = animations;
-    }
-
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -87,7 +72,7 @@ public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubbl
                 break;
             case DYING:
                 getActorBody().setActive(false);
-                if (currentAnimation.isAnimationFinished(getStateTime())) {
+                if (isAnimationFinished()) {
                     remove();
                 }
                 break;
@@ -95,42 +80,12 @@ public class Bubble extends AnimatedWorldActor<Bubble.BubbleState, HashMap<Bubbl
     }
 
     public void destroy() {
-        setActorState(BubbleState.DYING);
+        setActorState(BubbleStates.DYING);
     }
 
     @Override
     public boolean remove() {
         bubblesController.removeBubble(this);
         return super.remove();
-    }
-
-    public static class Builder {
-        private World world;
-        private HashMap<BubbleState, Animation<TextureRegion>> animations;
-        private BubblesController bubblesController;
-
-        public Builder() {
-            animations = new HashMap<BubbleState, Animation<TextureRegion>>();
-        }
-
-        public Builder world(World world) {
-            this.world = world;
-            return this;
-        }
-
-        public Builder addAnimationForState(BubbleState state, Animation<TextureRegion> animation) {
-            this.animations.put(state, animation);
-            return this;
-        }
-
-        public Builder bubblesController(BubblesController controller) {
-            bubblesController = controller;
-            return this;
-        }
-
-        public Bubble build() {
-            return new Bubble(world, animations, bubblesController);
-        }
-
     }
 }

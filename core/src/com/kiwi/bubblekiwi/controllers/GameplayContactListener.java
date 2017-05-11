@@ -1,7 +1,7 @@
 package com.kiwi.bubblekiwi.controllers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.kiwi.bubblekiwi.actors.Bubble;
+import com.kiwi.bubblekiwi.actors.bubble.Bubble;
 import com.kiwi.bubblekiwi.actors.GameplayBoundary;
 import com.kiwi.bubblekiwi.actors.Player;
 

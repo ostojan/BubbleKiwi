@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.actors.bubble.BubblesController;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.controllers.LevelController;
@@ -61,7 +62,7 @@ public class GameplayScreen extends AbstractScreen {
         this.ground = new com.kiwi.bubblekiwi.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.actors.GameplayBoundaryType.DOWN);
 
         player = new com.kiwi.bubblekiwi.actors.Player(world, assets, new PlayerConfiguration(0.05f, 1.8f));
-        com.kiwi.bubblekiwi.actors.BubblesController bubblesController = new com.kiwi.bubblekiwi.actors.BubblesController(world, assets);
+        BubblesController bubblesController = new BubblesController(world, assets);
 
         worldStage.addActor(background);
         worldStage.addActor(player);
