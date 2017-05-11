@@ -1,9 +1,10 @@
-package com.kiwi.bubblekiwi.entities;
+package com.kiwi.bubblekiwi.actors;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.entities.WorldImage;
 
 public class ParallaxLayer extends WorldImage {
     private Texture texture;

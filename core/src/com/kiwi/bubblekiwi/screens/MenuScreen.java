@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.GameController;
-import com.kiwi.bubblekiwi.entities.ParallaxImage;
-import com.kiwi.bubblekiwi.entities.ParallaxLayer;
+import com.kiwi.bubblekiwi.actors.ParallaxImage;
+import com.kiwi.bubblekiwi.actors.ParallaxLayer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.kiwi.bubblekiwi.entities;
+package com.kiwi.bubblekiwi.actors;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
+import com.kiwi.bubblekiwi.entities.AnimatedWorldActor;
 
 import java.util.HashMap;
 

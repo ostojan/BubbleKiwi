@@ -1,9 +1,10 @@
-package com.kiwi.bubblekiwi.entities;
+package com.kiwi.bubblekiwi.actors;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.data.PlayerConfiguration;
+import com.kiwi.bubblekiwi.entities.WorldActor;
 
 public class Player extends WorldActor {
     private static final float WIDTH = 120;

@@ -1,4 +1,4 @@
-package com.kiwi.bubblekiwi.entities;
+package com.kiwi.bubblekiwi.actors;
 
 import com.badlogic.gdx.physics.box2d.*;
 

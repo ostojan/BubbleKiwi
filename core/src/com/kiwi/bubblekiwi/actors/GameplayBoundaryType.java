@@ -1,4 +1,4 @@
-package com.kiwi.bubblekiwi.entities;
+package com.kiwi.bubblekiwi.actors;
 
 import com.badlogic.gdx.math.Vector2;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
