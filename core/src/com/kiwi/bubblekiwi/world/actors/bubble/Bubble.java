@@ -1,12 +1,12 @@
-package com.kiwi.bubblekiwi.actors.bubble;
+package com.kiwi.bubblekiwi.world.actors.bubble;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Disposable;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
-import com.kiwi.bubblekiwi.entities.AnimatedWorldActor;
+import com.kiwi.bubblekiwi.world.entities.AnimatedActor;
 
-public class Bubble extends AnimatedWorldActor<BubbleStates> implements Disposable {
+public class Bubble extends AnimatedActor<BubbleStates> implements Disposable {
     private BubblesController bubblesController;
     private float radius;
     private float startX;

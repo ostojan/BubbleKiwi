@@ -1,4 +1,4 @@
-package com.kiwi.bubblekiwi.actors.bubble;
+package com.kiwi.bubblekiwi.world.actors.bubble;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;

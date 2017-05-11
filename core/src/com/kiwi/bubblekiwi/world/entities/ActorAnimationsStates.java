@@ -1,4 +1,4 @@
-package com.kiwi.bubblekiwi.entities;
+package com.kiwi.bubblekiwi.world.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

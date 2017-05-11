@@ -1,4 +1,4 @@
-package com.kiwi.bubblekiwi.actors.bubble;
+package com.kiwi.bubblekiwi.world.actors.bubble;
 
 public enum BubbleStates {
     FALLING,

@@ -1,9 +1,8 @@
-package com.kiwi.bubblekiwi.entities;
+package com.kiwi.bubblekiwi.world.entities;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
 
-public abstract class WorldImage extends Image {
+public abstract class Image extends com.badlogic.gdx.scenes.scene2d.ui.Image {
     @Override
     public void setOrigin(float originX, float originY) {
         super.setOrigin(originX / BubbleKiwiGame.PPM, originY / BubbleKiwiGame.PPM);

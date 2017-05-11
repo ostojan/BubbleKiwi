@@ -1,7 +1,7 @@
 package com.kiwi.bubblekiwi.controllers;
 
 import com.badlogic.gdx.Gdx;
-import com.kiwi.bubblekiwi.actors.Player;
+import com.kiwi.bubblekiwi.world.actors.Player;
 
 public class MoveController {
     private Player player;

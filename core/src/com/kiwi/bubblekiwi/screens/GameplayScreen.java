@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
-import com.kiwi.bubblekiwi.actors.bubble.BubblesController;
+import com.kiwi.bubblekiwi.world.actors.bubble.BubblesController;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.controllers.LevelController;
@@ -19,12 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameplayScreen extends AbstractScreen {
-    private com.kiwi.bubblekiwi.actors.Player player;
+    private com.kiwi.bubblekiwi.world.actors.Player player;
     private LevelController levelController;
     private World world;
     private GameOver gameOver;
     private MoveController moveController;
-    private com.kiwi.bubblekiwi.actors.GameplayBoundary ground;
+    private com.kiwi.bubblekiwi.world.actors.GameplayBoundary ground;
 
     public GameplayScreen(BubbleKiwiGame game, Assets assets, LevelController levelController) {
         super(game, assets);
@@ -49,19 +49,19 @@ public class GameplayScreen extends AbstractScreen {
     }
 
     private void initializeWorld() {
-        List<com.kiwi.bubblekiwi.actors.ParallaxLayer> layers = new ArrayList<com.kiwi.bubblekiwi.actors.ParallaxLayer>();
+        List<com.kiwi.bubblekiwi.world.actors.ParallaxLayer> layers = new ArrayList<com.kiwi.bubblekiwi.world.actors.ParallaxLayer>();
         for (Background background : levelController.getBackgrounds()) {
             Texture layerTexture = assets.get(background.getAssetDescriptor());
-            layers.add(new com.kiwi.bubblekiwi.actors.ParallaxLayer(layerTexture, BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, background.getSpeed()));
+            layers.add(new com.kiwi.bubblekiwi.world.actors.ParallaxLayer(layerTexture, BubbleKiwiGame.WIDTH, BubbleKiwiGame.HEIGHT, background.getSpeed()));
         }
-        com.kiwi.bubblekiwi.actors.ParallaxImage background = new com.kiwi.bubblekiwi.actors.ParallaxImage(layers);
+        com.kiwi.bubblekiwi.world.actors.ParallaxImage background = new com.kiwi.bubblekiwi.world.actors.ParallaxImage(layers);
 
-        new com.kiwi.bubblekiwi.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.actors.GameplayBoundaryType.UP);
-        new com.kiwi.bubblekiwi.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.actors.GameplayBoundaryType.LEFT);
-        new com.kiwi.bubblekiwi.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.actors.GameplayBoundaryType.RIGHT);
-        this.ground = new com.kiwi.bubblekiwi.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.actors.GameplayBoundaryType.DOWN);
+        new com.kiwi.bubblekiwi.world.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.world.actors.GameplayBoundaryType.UP);
+        new com.kiwi.bubblekiwi.world.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.world.actors.GameplayBoundaryType.LEFT);
+        new com.kiwi.bubblekiwi.world.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.world.actors.GameplayBoundaryType.RIGHT);
+        this.ground = new com.kiwi.bubblekiwi.world.actors.GameplayBoundary(world, com.kiwi.bubblekiwi.world.actors.GameplayBoundaryType.DOWN);
 
-        player = new com.kiwi.bubblekiwi.actors.Player(world, assets, new PlayerConfiguration(0.05f, 1.8f));
+        player = new com.kiwi.bubblekiwi.world.actors.Player(world, assets, new PlayerConfiguration(0.05f, 1.8f));
         BubblesController bubblesController = new BubblesController(world, assets);
 
         worldStage.addActor(background);

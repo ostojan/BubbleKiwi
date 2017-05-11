@@ -1,8 +1,8 @@
-package com.kiwi.bubblekiwi.actors.bubble;
+package com.kiwi.bubblekiwi.world.actors.bubble;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.kiwi.bubblekiwi.entities.ActorAnimationsStates;
+import com.kiwi.bubblekiwi.world.entities.ActorAnimationsStates;
 
 import java.util.Map;
 

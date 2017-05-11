@@ -1,9 +1,9 @@
 package com.kiwi.bubblekiwi.controllers;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.kiwi.bubblekiwi.actors.bubble.Bubble;
-import com.kiwi.bubblekiwi.actors.GameplayBoundary;
-import com.kiwi.bubblekiwi.actors.Player;
+import com.kiwi.bubblekiwi.world.actors.bubble.Bubble;
+import com.kiwi.bubblekiwi.world.actors.GameplayBoundary;
+import com.kiwi.bubblekiwi.world.actors.Player;
 
 public class GameplayContactListener implements ContactListener {
     private Player player;
