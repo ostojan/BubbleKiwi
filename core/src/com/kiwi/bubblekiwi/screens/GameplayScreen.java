@@ -4,16 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kiwi.bubblekiwi.BubbleKiwiGame;
-import com.kiwi.bubblekiwi.world.actors.bubble.BubblesController;
 import com.kiwi.bubblekiwi.controllers.Assets;
 import com.kiwi.bubblekiwi.controllers.GameplayContactListener;
 import com.kiwi.bubblekiwi.controllers.LevelController;
 import com.kiwi.bubblekiwi.controllers.MoveController;
 import com.kiwi.bubblekiwi.data.Background;
-import com.kiwi.bubblekiwi.data.PlayerConfiguration;
-import com.kiwi.bubblekiwi.ui.GameOver;
-import com.kiwi.bubblekiwi.ui.Lives;
-import com.kiwi.bubblekiwi.ui.Points;
+import com.kiwi.bubblekiwi.ui.*;
+import com.kiwi.bubblekiwi.world.actors.bubble.BubblesController;
 import com.kiwi.bubblekiwi.world.actors.player.Player;
 import com.kiwi.bubblekiwi.world.elements.GameplayBoundary;
 import com.kiwi.bubblekiwi.world.elements.GameplayBoundaryType;
@@ -26,6 +23,7 @@ public class GameplayScreen extends AbstractScreen {
     private LevelController levelController;
     private World world;
     private GameOver gameOver;
+    private TimesUp timesUp;
     private MoveController moveController;
     private GameplayBoundary ground;
 
@@ -75,9 +73,12 @@ public class GameplayScreen extends AbstractScreen {
     private void initializeUI() {
         Points points = new Points(assets, levelController);
         Lives lives = new Lives(assets, levelController);
+        Clock clock = new Clock(assets, levelController);
         gameOver = new GameOver(assets);
+        timesUp = new TimesUp(assets);
         stage.addActor(points);
         stage.addActor(lives);
+        stage.addActor(clock);
     }
 
     @Override
@@ -99,7 +100,12 @@ public class GameplayScreen extends AbstractScreen {
                     stage.addActor(gameOver);
                     levelController.setState(LevelController.LevelState.GAME_OVER);
                 }
+                if (levelController.getTimeToEnd() <= 0) {
+                    stage.addActor(timesUp);
+                    levelController.setState(LevelController.LevelState.TIMES_UP);
+                }
                 break;
+            case TIMES_UP:
             case GAME_OVER:
                 if (levelController.getStateTime() > 3.0f) {
                     goToScreen(new MenuScreen(game, assets));

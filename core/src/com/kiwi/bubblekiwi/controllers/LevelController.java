@@ -6,27 +6,36 @@ import com.kiwi.bubblekiwi.data.Level;
 import java.util.List;
 
 public class LevelController {
+
     public enum LevelState {
         PLAY,
-        GAME_OVER
+        TIMES_UP,
+        GAME_OVER;
     }
 
     private int lives;
+
     private int points;
     private LevelState state;
     private float stateTime;
+    private int timeToEnd;
+
     private Level level;
 
     public LevelController(Level level) {
+        this.level = level;
         this.lives = 3;
         this.points = 0;
         this.state = LevelState.PLAY;
         this.stateTime = 0.0f;
-        this.level = level;
+        this.timeToEnd = level.getTime();
     }
 
     public void addTime(float time) {
         stateTime += time;
+        if (state == LevelState.PLAY) {
+            timeToEnd = level.getTime() - Math.round(stateTime);
+        }
     }
 
     public void addPoints(int points) {
@@ -59,6 +68,10 @@ public class LevelController {
                 this.lives -= lives;
             }
         }
+    }
+
+    public int getTimeToEnd() {
+        return timeToEnd;
     }
 
     public int getLives() {
