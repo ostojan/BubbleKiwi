@@ -24,6 +24,7 @@ public class GameplayScreen extends AbstractScreen {
     private World world;
     private GameOver gameOver;
     private TimesUp timesUp;
+    private Joystick joystick;
     private MoveController moveController;
     private GameplayBoundary ground;
 
@@ -39,7 +40,7 @@ public class GameplayScreen extends AbstractScreen {
         initializeWorld();
         initializeUI();
         world.setContactListener(new GameplayContactListener(player, ground, levelController));
-        moveController = new MoveController(player);
+        moveController = new MoveController(player, joystick);
     }
 
     private void initializeAssets() {
@@ -76,9 +77,11 @@ public class GameplayScreen extends AbstractScreen {
         Clock clock = new Clock(assets, levelController);
         gameOver = new GameOver(assets);
         timesUp = new TimesUp(assets);
+        joystick = new Joystick(assets);
         stage.addActor(points);
         stage.addActor(lives);
         stage.addActor(clock);
+        stage.addActor(joystick);
     }
 
     @Override

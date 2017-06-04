@@ -35,6 +35,10 @@ public class Assets implements Disposable {
             new AssetDescriptor<TextureAtlas>("sprites/bubbles.atlas", TextureAtlas.class);
     public static final AssetDescriptor<TextureAtlas> bubbleDeath =
             new AssetDescriptor<TextureAtlas>("sprites/bubble_death.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<Texture> touchpadBackground =
+            new AssetDescriptor<Texture>("ui/touchpad/background.png", Texture.class);
+    public static final AssetDescriptor<Texture> touchpadKnob =
+            new AssetDescriptor<Texture>("ui/touchpad/knob.png", Texture.class);
 
     public static AssetDescriptor<BitmapFont> arialSmall;
     public static AssetDescriptor<BitmapFont> arialMedium;
@@ -87,6 +91,8 @@ public class Assets implements Disposable {
         manager.load(kiwiJumping);
         manager.load(bubbles);
         manager.load(bubbleDeath);
+        manager.load(touchpadBackground);
+        manager.load(touchpadKnob);
         manager.finishLoading();
     }
 

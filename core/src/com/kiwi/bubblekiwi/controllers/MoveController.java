@@ -1,25 +1,27 @@
 package com.kiwi.bubblekiwi.controllers;
 
 import com.badlogic.gdx.Gdx;
+import com.kiwi.bubblekiwi.ui.Joystick;
 import com.kiwi.bubblekiwi.world.actors.player.Player;
 
 public class MoveController {
     private Player player;
+    private Joystick joystick;
 
-    public MoveController(final Player player) {
+    public MoveController(final Player player, final Joystick joystick) {
         this.player = player;
+        this.joystick = joystick;
     }
 
     public void move() {
-        float acceleration = Gdx.input.getAccelerometerY();
-        if (Math.abs(acceleration) > 0.5f) {
-            if (acceleration > 0.0f) {
+        if (Math.abs(joystick.getXAxis()) > 0.5f) {
+            if (joystick.getXAxis() > 0.0f) {
                 player.moveRight();
             } else {
                 player.moveLeft();
             }
         }
-        if (Gdx.input.justTouched()) {
+        if (joystick.getYAxis() > 0.9f) {
             player.jump();
         }
     }
