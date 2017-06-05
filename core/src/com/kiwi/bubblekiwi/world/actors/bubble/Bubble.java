@@ -47,6 +47,7 @@ public class Bubble extends AnimatedActor<BubbleStates> implements Disposable {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 0.0001f;
+        fixtureDef.isSensor = true;
         return fixtureDef;
     }
 
