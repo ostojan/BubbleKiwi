@@ -39,6 +39,8 @@ public class Assets implements Disposable {
             new AssetDescriptor<Texture>("ui/touchpad/background.png", Texture.class);
     public static final AssetDescriptor<Texture> touchpadKnob =
             new AssetDescriptor<Texture>("ui/touchpad/knob.png", Texture.class);
+    public static final AssetDescriptor<Texture> clock =
+            new AssetDescriptor<Texture>("sprites/clock.png", Texture.class);
 
     public static AssetDescriptor<BitmapFont> arialSmall;
     public static AssetDescriptor<BitmapFont> arialMedium;
@@ -93,6 +95,7 @@ public class Assets implements Disposable {
         manager.load(bubbleDeath);
         manager.load(touchpadBackground);
         manager.load(touchpadKnob);
+        manager.load(clock);
         manager.finishLoading();
     }
 

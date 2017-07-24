@@ -24,7 +24,7 @@ public class Points extends Actor {
     private void initializeBubbleImage(Assets assets) {
         bubble = new Image(assets.get(Assets.bubbles).getRegions().first());
         bubble.setSize(50.0f, 50.0f);
-        bubble.setPosition(25.0f, BubbleKiwiGame.HEIGHT - 75.0f);
+        bubble.setPosition(BubbleKiwiGame.WIDTH - 75.0f, BubbleKiwiGame.HEIGHT - 75.0f);
     }
 
     private void initializePointsLabel(Assets assets) {
@@ -32,10 +32,10 @@ public class Points extends Actor {
         labelStyle.font = assets.get(Assets.arialMedium);
         labelStyle.fontColor = Color.GOLD;
         points = new Label(String.format("%d", levelController.getPoints()), labelStyle);
-        points.setAlignment(Align.left);
+        points.setAlignment(Align.right);
         points.setWrap(true);
         points.setWidth(BubbleKiwiGame.WIDTH / 4.0f);
-        points.setPosition(85.0f, BubbleKiwiGame.HEIGHT - 75.0f);
+        points.setPosition(bubble.getX() - points.getWidth() - 10.0f, BubbleKiwiGame.HEIGHT - 75.0f);
     }
 
     @Override

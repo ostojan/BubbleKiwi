@@ -73,13 +73,11 @@ public class GameplayScreen extends AbstractScreen {
 
     private void initializeUI() {
         Points points = new Points(assets, levelController);
-        Lives lives = new Lives(assets, levelController);
         Clock clock = new Clock(assets, levelController);
         gameOver = new GameOver(assets);
         timesUp = new TimesUp(assets);
         joystick = new Joystick(assets);
         stage.addActor(points);
-        stage.addActor(lives);
         stage.addActor(clock);
         stage.addActor(joystick);
     }
@@ -99,17 +97,17 @@ public class GameplayScreen extends AbstractScreen {
         switch (levelController.getState()) {
             case PLAY:
                 moveController.move();
-                if (levelController.getLives() <= 0) {
+                if (levelController.didPlayerLose()) {
                     stage.addActor(gameOver);
-                    levelController.setState(LevelController.LevelState.GAME_OVER);
+                    levelController.setState(LevelController.LevelState.PLAYER_LOST);
                 }
-                if (levelController.getTimeToEnd() <= 0) {
+                if (levelController.didPlayerWin()) {
                     stage.addActor(timesUp);
-                    levelController.setState(LevelController.LevelState.TIMES_UP);
+                    levelController.setState(LevelController.LevelState.PLAYER_WON);
                 }
                 break;
-            case TIMES_UP:
-            case GAME_OVER:
+            case PLAYER_WON:
+            case PLAYER_LOST:
                 if (levelController.getStateTime() > 3.0f) {
                     goToScreen(new MenuScreen(game, assets));
                 }

@@ -9,8 +9,8 @@ public class LevelController {
 
     public enum LevelState {
         PLAY,
-        TIMES_UP,
-        GAME_OVER;
+        PLAYER_WON,
+        PLAYER_LOST
     }
 
     private int lives;
@@ -68,6 +68,14 @@ public class LevelController {
                 this.lives -= lives;
             }
         }
+    }
+
+    public boolean didPlayerLose() {
+        return false;
+    }
+
+    public boolean didPlayerWin() {
+        return timeToEnd <= 0;
     }
 
     public int getTimeToEnd() {
